@@ -307,5 +307,13 @@
     "op:+=",
     "op:-=",
     "op:<"
+  ],
+  "phi_shared_count": 13,
+  "srcml_line5": "<if_stmt><if>if <condition>(<expr><name>length</name> <operator>&gt;</operator> <literal type=\"number\">3</literal></expr>)</condition>",
+  "phi_line5": [
+    "ctrl:condition",
+    "ctrl:if",
+    "lit:number",
+    "op:>"
   ]
 }

@@ -10,7 +10,15 @@ An auditor handed a vulnerable function reads lines in some order. We compare
                       line (ties top-down), then the rest -- the ordering the
                       slice_audit.py tool emits,
   var-mention-first : read the variable-mention region top-down, then the rest,
-  random            : expected values for a uniformly random reading order,
+  random            : expected values for a uniformly random reading order.
+Two further orders separate the region from the ordering (does the slice help, or does ordering
+by sink proximity alone?):
+  var-mention-sink-proximity : the variable-mention region ordered by distance to the nearest
+                               sink, then the rest,
+  whole-sink-proximity       : every line of the function ordered by distance to the nearest
+                               sink, with no slice at all.
+A per-function analysis relates the gain of sink-proximity reading over top-down (IFA) to sink
+density, the share of the function's lines that hold a sink.
 using the effort-aware metrics common in line-level vulnerability localization:
   IFA      lines read before the first deleted fix line (initial false alarms),
   Top-k    share of functions whose first fix line is among the first k lines read,
@@ -23,7 +31,7 @@ import sys
 import json
 
 import numpy as np
-from scipy.stats import wilcoxon
+from scipy.stats import spearmanr, wilcoxon
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -71,7 +79,9 @@ def random_expectation(dels, n):
 
 
 def run(pairs):
-    per = {"top_down": [], "slice_first": [], "sink_proximity": [], "var_mention_first": [], "random": []}
+    per = {"top_down": [], "slice_first": [], "sink_proximity": [], "var_mention_first": [], "random": [],
+           "var_mention_sink_proximity": [], "whole_sink_proximity": []}
+    density = []
     for pr in pairs:
         fbl = pr["func_before"].splitlines()
         n = len(fbl)
@@ -85,6 +95,9 @@ def run(pairs):
         per["sink_proximity"].append(metrics(sink_proximity_order(S, sinks, n), dels, n))
         per["var_mention_first"].append(metrics(order_first(vm, n), dels, n))
         per["random"].append(random_expectation(dels, n))
+        per["var_mention_sink_proximity"].append(metrics(sink_proximity_order(set(vm), sinks, n), dels, n))
+        per["whole_sink_proximity"].append(metrics(sink_proximity_order(set(range(n)), sinks, n), dels, n))
+        density.append(len(set(sinks)) / n)
     out = {"n": len(per["top_down"])}
     for k, rows in per.items():
         out[k] = {m: float(np.mean([r[m] for r in rows])) for m in rows[0]}
@@ -94,6 +107,27 @@ def run(pairs):
         for base in ("top_down", "var_mention_first", "random"):
             b = [r["ifa"] for r in per[base]]
             out[f"p_ifa_{tool}_vs_{base}"] = float(wilcoxon(sf, b).pvalue)
+    sp = [r["ifa"] for r in per["sink_proximity"]]
+    for base in ("var_mention_sink_proximity", "whole_sink_proximity"):
+        b = [r["ifa"] for r in per[base]]
+        diff = [x - y for x, y in zip(sp, b)]
+        out[f"p_ifa_sink_proximity_vs_{base}"] = (float(wilcoxon(sp, b).pvalue)
+                                                  if any(diff) else 1.0)
+    # Does the gain over top-down depend on sink density? (gain > 0: fewer lines read)
+    gain = [t["ifa"] - s["ifa"] for t, s in zip(per["top_down"], per["sink_proximity"])]
+    top3_gain = [s["top3"] - t["top3"] for t, s in zip(per["top_down"], per["sink_proximity"])]
+    rho, p = spearmanr(density, gain)
+    q = np.quantile(density, [0.25, 0.5, 0.75])
+    bins = np.digitize(density, q)
+    out["sink_density"] = {
+        "mean": float(np.mean(density)), "quartile_edges": [float(x) for x in q],
+        "spearman_rho_density_vs_ifa_gain": float(rho), "spearman_p": float(p),
+        "by_quartile": [{"quartile": i + 1, "n": int((bins == i).sum()),
+                         "mean_density": float(np.mean([d for d, b in zip(density, bins) if b == i])),
+                         "mean_ifa_gain": float(np.mean([g for g, b in zip(gain, bins) if b == i])),
+                         "top3_gain": float(np.mean([g for g, b in zip(top3_gain, bins) if b == i]))}
+                        for i in range(4)],
+    }
     return out
 
 

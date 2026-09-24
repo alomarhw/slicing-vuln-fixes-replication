@@ -3,7 +3,8 @@
 Prints, for func_before and func_after: each sink statement with the SySeVR category that makes it
 a sink, the worklist order of Algorithm 1 (which statement is popped, and what it adds through data
 or control dependence), the slice S, the deleted/added lines, Coverage and RSR, the variable-mention
-region, and the srcML feature sets phi over each version's slice with the fix's delta. The trace
+region, the srcML feature sets phi over each version's slice with the fix's delta, and the srcML
+markup of line 5 with the phi tokens it yields. The trace
 replays the slicer's own helpers and asserts that it reproduces ast_slicer.semantic_slice_indices.
 Writes results/example_trace.json.
 """
@@ -13,7 +14,9 @@ from __future__ import annotations
 import difflib
 import json
 import os
+import subprocess
 import sys
+import tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -98,6 +101,20 @@ def trace(code):
             "slice": sorted(i + 1 for i in kept), "n": len(code.splitlines())}
 
 
+def srcml_of_line(code, line):
+    """srcML markup of the statement starting on a 1-based line (the if on line 5 in the paper)."""
+    with tempfile.NamedTemporaryFile("w", suffix=".c", delete=False) as fh:
+        fh.write(code)
+        path = fh.name
+    try:
+        xml = subprocess.run(["srcml", path], capture_output=True, text=True, check=True).stdout
+    finally:
+        os.unlink(path)
+    target = code.splitlines()[line - 1].strip().split("(")[0].strip()  # "if"
+    start = xml.index(f"<{target}_stmt>") if f"<{target}_stmt>" in xml else 0
+    return xml[start:xml.index("</condition>", start) + len("</condition>")]
+
+
 def main():
     before, after = load_pair()
     tb, ta = trace(before), trace(after)
@@ -118,6 +135,8 @@ def main():
         "variable_mention_region": sorted(i + 1 for i in varmention_idx(before)),
         "phi_before_slice": sorted(phi_b), "phi_after_slice": sorted(phi_a),
         "phi_removed": sorted(phi_b - phi_a), "phi_added": sorted(phi_a - phi_b),
+        "phi_shared_count": len(phi_b & phi_a),
+        "srcml_line5": srcml_of_line(before, 5), "phi_line5": sorted(feat_set(before, [4])),
     }
     os.makedirs(os.path.join(HERE, "results"), exist_ok=True)
     with open(os.path.join(HERE, "results", "example_trace.json"), "w") as fh:

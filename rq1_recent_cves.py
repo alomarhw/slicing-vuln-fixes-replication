@@ -104,11 +104,17 @@ def evaluate(pairs):
         vm, _ = variable_mention_region(fbl, crit)
         td = metrics(list(range(n)), dels, n)
         sp = metrics(sink_proximity_order(S, sinks, n), dels, n)
+        # Same ordering without the slice: the variable-mention region, and the whole function.
+        vsp = metrics(sink_proximity_order(set(vm), sinks, n), dels, n)
+        wsp = metrics(sink_proximity_order(set(range(n)), sinks, n), dels, n)
         rows.append({"repo": p["repo"], "commit": p["commit"], "cov": len(S & dels) / len(dels), "rsr": len(S) / n,
                      "vm_cov": (len(vm & dels) / len(dels)) if vm else 0.0, "vm_rsr": len(vm) / n,
                      "ifa_td": td["ifa"], "ifa_sp": sp["ifa"], "top3_td": td["top3"], "top3_sp": sp["top3"],
                      "top5_td": td["top5"], "top5_sp": sp["top5"],
-                     "effort_td": td["effort"], "effort_sp": sp["effort"]})
+                     "effort_td": td["effort"], "effort_sp": sp["effort"],
+                     "top1_sp": sp["top1"], "top1_vmsp": vsp["top1"], "top1_wsp": wsp["top1"],
+                     "ifa_vmsp": vsp["ifa"], "top3_vmsp": vsp["top3"], "effort_vmsp": vsp["effort"],
+                     "ifa_wsp": wsp["ifa"], "top3_wsp": wsp["top3"], "effort_wsp": wsp["effort"]})
     return rows
 
 
@@ -131,7 +137,21 @@ def summarize(rows):
             "top3_top_down": float(a("top3_td").mean()), "top3_sink_proximity": float(a("top3_sp").mean()),
             "top5_top_down": float(a("top5_td").mean()), "top5_sink_proximity": float(a("top5_sp").mean()),
             "effort_top_down": float(a("effort_td").mean()), "effort_sink_proximity": float(a("effort_sp").mean()),
-            "p_ifa": p(a("ifa_sp"), a("ifa_td"))}
+            "p_ifa": p(a("ifa_sp"), a("ifa_td")),
+            "ordering_check": {
+                "top1_sink_proximity": float(a("top1_sp").mean()),
+                "var_mention_sink_proximity": {"ifa": float(a("ifa_vmsp").mean()),
+                                               "ifa_median": float(np.median(a("ifa_vmsp"))),
+                                               "top1": float(a("top1_vmsp").mean()),
+                                               "top3": float(a("top3_vmsp").mean()),
+                                               "effort": float(a("effort_vmsp").mean()),
+                                               "p_ifa_vs_slice": p(a("ifa_sp"), a("ifa_vmsp"))},
+                "whole_sink_proximity": {"ifa": float(a("ifa_wsp").mean()),
+                                         "ifa_median": float(np.median(a("ifa_wsp"))),
+                                         "top1": float(a("top1_wsp").mean()),
+                                         "top3": float(a("top3_wsp").mean()),
+                                         "effort": float(a("effort_wsp").mean()),
+                                         "p_ifa_vs_slice": p(a("ifa_sp"), a("ifa_wsp"))}}}
 
 
 def main():
