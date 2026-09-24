@@ -4,9 +4,13 @@ Describes every field used by the current pipeline: the raw BigVul input
 (`data/bigvul/sample.jsonl`) and the derived fields written to `results/*.json`
 by `consolidated_study.py` (RQ1), `augmented_study.py` (RQ2, RQ3 core),
 `baselines_sota.py` / `graph_model.py` / `fusion_study.py` / `finetune_codebert.py`
-(RQ3 baselines), and `analyze_sink_fallback.py` (RQ1 diagnostic). This
-supersedes an earlier version of this file written for an abandoned pipeline
-(SG-VDR / Defects4J / Juliet) that is no longer part of this study.
+(RQ3 baselines), and `analyze_sink_fallback.py` (RQ1 diagnostic). The revision analyses
+(`rq1_*.py`, `rq2_full_population.py`, `rq3_*.py`, `joern_validation*/`) write the additional
+result files listed at the end; the README maps each paper table and figure to its file.
+
+`data/bigvul_full/test.parquet` holds the full 33,050-row BigVul test split with the same fields as
+the sample below; `rq1_full_population.py` converts it to `data/bigvul_full/test.jsonl`. Both data
+files are verified by SHA-256 in `fetch_data.py`.
 
 ## Raw input: `data/bigvul/sample.jsonl` (one JSON object per line)
 
@@ -75,4 +79,22 @@ supersedes an earlier version of this file written for an abandoned pipeline
 | Field | Type | Description |
 |---|---|---|
 | `usedSynthetic` | boolean | Must be `false` for every reported result in the paper; `true` would mean a fabricated-data fallback fired (it never does in the shipped results). |
-| `datasets` | list | Which real dataset(s) backed each experiment (BigVul only; see README's Data section for why Devign/CodeXGLUE and Defects4J were not used). |
+| `datasets` | list | Which real dataset(s) backed each experiment (BigVul only). |
+
+## Revision result files
+
+| File | Content |
+|---|---|
+| `rq1_baselines.json` | per-pair coverage and RSR for the slice and five region baselines, insertion anchors, miss taxonomy |
+| `rq1_full_population.json` | RQ1 on all qualifying pairs of the full test split; project/CWE composition of both populations |
+| `rq1_selective_sinks.json` | narrower sink sets (main sample and full population); per-stage timing |
+| `rq1_slice_direction.json` | backward vs. srcSlice forward slices, chops, unions, data-only backward slices |
+| `rq1_inspection_effort.json` | IFA, Top-k, and effort for each reading order |
+| `rq1_sink_density.json` | sink density vs. slice/variable-mention overlap and coverage gap |
+| `rq1_recent_cves.json`, `rq1_recent_cves_pairs.jsonl` | RQ1 on CVE fixes committed since 2020 (pooled, per project, commit-weighted); the mined commits and functions |
+| `joern_validation.json`, `rq3_joern_scope.json` | agreement with Joern's slices; RQ3 scope comparison over Joern's slices |
+| `rq2_full_population.json` | RQ2 on the full test split |
+| `rq3_grouped_cv.json`, `rq3_grouped_cv_project.json` | RQ3 with CVE- and project-grouped folds |
+| `rq3_normalized_tokens.json` | SySeVR-style normalized-token conditions and tests |
+| `rq3_codebert_repeated.json`, `rq3_codebert_embeddings.npy` | frozen CodeBERT under the RQ3 protocol; the embeddings it uses |
+| `figure_data.json` | the values plotted in the region-map and effort figures |

@@ -24,7 +24,8 @@ No patches are generated anywhere.
 - Python 3.12 (tested on macOS 15, Intel Xeon W-2140B desktop; CodeBERT on the Metal (MPS) GPU backend or CPU).
 - Two virtual environments, because `torch==2.2.2` needs `numpy<2` while the rest needs
   `numpy>=2`: `requirements.txt` (main) and `requirements-codebert.txt` (CodeBERT scripts).
-- External tools on `PATH`: `srcml` 1.1.0 and `srcslice` (RQ2 coarse arm, forward slices).
+- External tools on `PATH`: `srcml` 1.1.0 (https://www.srcml.org) and `srcslice`
+  (https://github.com/srcML/srcSlice), used for the RQ2 coarse arm and the forward slices.
   The tree-sitter C grammar is installed from `requirements.txt` (tree-sitter 0.25.2,
   tree-sitter-c 0.24.2).
 - Optional: Joern 4.0.635 (slicer validation) and local clones of ten C projects (recent-CVE
@@ -37,9 +38,17 @@ No patches are generated anywhere.
 ```
 
 `run_all.py` runs every step in order and stops on the first failure; its docstring lists each
-script, its output, and its venv. The full-population steps need the full BigVul test split:
-`data/bigvul_full/test.parquet`, the HuggingFace parquet export of `bstee615/bigvul` (split
-`test`, 33,050 rows). Fine-tuning CodeBERT is by far the slowest step; the other steps take minutes each.
+script, its output, and its venv. Its first step, `fetch_data.py`, verifies the two shipped data
+files by SHA-256 and re-fetches only a missing or altered one:
+
+| File | Content | Source |
+|---|---|---|
+| `data/bigvul/sample.jsonl` | first 20,000 rows of the BigVul test split (main study) | HuggingFace `bstee615/bigvul`, split `test` |
+| `data/bigvul_full/test.parquet` | full 33,050-row test split (full-population checks) | HuggingFace parquet export of the same split |
+
+Every CPU step reproduces the shipped `results/*.json` exactly from a fresh clone. Most steps take
+seconds to a few minutes; `augmented_study.py` (RQ2/RQ3 core) takes longest among them. Fine-tuning
+CodeBERT is by far the slowest step and needs a GPU (we used the Metal backend).
 
 ## Paper table -> script -> result file
 
