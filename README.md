@@ -1,4 +1,4 @@
-# Scope Is Not Content: An Empirical Study of Program Slices and Structural Features on Real Vulnerability Fixes
+# Scope Is Not Content: An Empirical Study of Program Slicing on Real Vulnerability Fixes
 
 Replication package for the SANER 2027 research-track submission. Every number in the
 paper's tables comes from a JSON file in `results/` written by a script in this directory.
@@ -113,3 +113,9 @@ pipeline. `results/*.BROKEN_*`,
 
 BigVul (https://huggingface.co/datasets/bstee615/bigvul): `data/bigvul/sample.jsonl` holds the
 first 20,000 rows of the test split used by the main study.
+
+## License
+
+The code in this repository is released under the MIT License (`LICENSE`). The BigVul data files
+in `data/` are redistributed from the HuggingFace dataset `bstee615/bigvul` and remain under their
+original terms.
