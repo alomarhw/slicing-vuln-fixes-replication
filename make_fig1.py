@@ -295,8 +295,11 @@ def stage(x, y, w, h, tag, title_segs, sub_lines, fill, stroke):
 
 
 # ================================================================== canvas
-add(f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" '
-    f'viewBox="0 0 {W} {H}">')
+# Crop to the drawn content (lanes span x 22..1720, y 58..662) so no blank margin sits between the
+# figure and its caption in the paper.
+CX, CY, CW, CH = 12, 50, 1718, 622
+add(f'<svg xmlns="http://www.w3.org/2000/svg" width="{CW}" height="{CH}" '
+    f'viewBox="{CX} {CY} {CW} {CH}">')
 add('<defs><marker id="ah" viewBox="0 0 10 10" refX="8.5" refY="5" '
     'markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">'
     f'<path d="M 0 1.2 L 10 5 L 0 8.8 z" fill="{C_INK}"/></marker></defs>')
