@@ -81,7 +81,8 @@ def main():
     A.RepeatedStratifiedKFold = GroupedRepeatedCV
     res = A.run_rq3(rows)
     g = np.array(groups)
-    out = {"grouping": f"{GROUP_BY} (StratifiedGroupKFold, 30 repeats x 5 folds)",
+    label = "CVE ID" if GROUP_BY == "cve" else GROUP_BY
+    out = {"grouping": f"{label} (StratifiedGroupKFold, 30 repeats x 5 folds)",
            "n_groups": int(len(set(groups))),
            "largest_group": int(max(np.unique(g, return_counts=True)[1])),
            "rq3_grouped": res}

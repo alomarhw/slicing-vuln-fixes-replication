@@ -18,17 +18,17 @@
   "n_deletion_pairs": 369,
   "pooled": {
     "n": 369,
-    "coverage": 0.8897039045804542,
+    "coverage": 0.889703904580454,
     "coverage_ci95": [
-      0.8655151653235726,
-      0.9128442226341494
+      0.8646293138574909,
+      0.9135283875648368
     ],
     "median_coverage": 1.0,
     "rsr": 0.6217062058086594,
-    "lift_vs_random": 1.431068077281306,
+    "lift_vs_random": 1.4310680772813058,
     "p_vs_random": 1.8675840458389224e-42,
     "var_mention_coverage": 0.9098697541139826,
-    "var_mention_rsr": 0.59393231524416,
+    "var_mention_rsr": 0.5939323152441599,
     "p_vs_var_mention": 0.24329186461742458,
     "ifa_top_down": 81.0,
     "ifa_sink_proximity": 62.013550135501355,
@@ -46,10 +46,10 @@
     "cov": 0.8615018098153119,
     "rsr": 0.6224383115088241,
     "vm_cov": 0.8790627694004504,
-    "ifa_td": 120.54226822363762,
+    "ifa_td": 120.54226822363765,
     "ifa_sp": 111.93826767319338,
     "top3_td": 0.07446429975623181,
-    "top3_sp": 0.23609341825902333,
+    "top3_sp": 0.23609341825902339,
     "effort_td": 0.6450843999014453,
     "effort_sp": 0.5104674454134328,
     "n_commits": 157,
@@ -60,8 +60,8 @@
       "n": 69,
       "coverage": 0.9065730326599892,
       "coverage_ci95": [
-        0.8470832400723706,
-        0.9571522998153432
+        0.8452009540596498,
+        0.9571618124335515
       ],
       "median_coverage": 1.0,
       "rsr": 0.6571759280460943,
@@ -78,7 +78,7 @@
       "top3_sink_proximity": 0.17391304347826086,
       "top5_top_down": 0.11594202898550725,
       "top5_sink_proximity": 0.18840579710144928,
-      "effort_top_down": 0.6385560601438313,
+      "effort_top_down": 0.6385560601438312,
       "effort_sink_proximity": 0.48772674113781256,
       "p_ifa": 5.053857389593866e-06
     },
@@ -94,7 +94,7 @@
       "lift_vs_random": 1.428759798899514,
       "p_vs_random": 0.00048828125,
       "var_mention_coverage": 0.9056776556776557,
-      "var_mention_rsr": 0.6777746660415382,
+      "var_mention_rsr": 0.6777746660415384,
       "p_vs_var_mention": 0.5,
       "ifa_top_down": 52.38461538461539,
       "ifa_sink_proximity": 32.69230769230769,
@@ -105,7 +105,7 @@
       "top5_top_down": 0.23076923076923078,
       "top5_sink_proximity": 0.38461538461538464,
       "effort_top_down": 0.6600726815135457,
-      "effort_sink_proximity": 0.4776729622372613,
+      "effort_sink_proximity": 0.4776729622372612,
       "p_ifa": 0.065185546875
     },
     "imagemagick": {
@@ -136,14 +136,14 @@
     },
     "libarchive": {
       "n": 5,
-      "coverage": 0.9714285714285713,
+      "coverage": 0.9714285714285715,
       "coverage_ci95": [
         0.9142857142857143,
         1.0
       ],
       "median_coverage": 1.0,
       "rsr": 0.7287528669305947,
-      "lift_vs_random": 1.3330013719466969,
+      "lift_vs_random": 1.333001371946697,
       "p_vs_random": 0.0625,
       "var_mention_coverage": 0.9,
       "var_mention_rsr": 0.658554531332934,
@@ -156,7 +156,7 @@
       "top3_sink_proximity": 0.0,
       "top5_top_down": 0.2,
       "top5_sink_proximity": 0.0,
-      "effort_top_down": 0.8936442665827963,
+      "effort_top_down": 0.8936442665827965,
       "effort_sink_proximity": 0.44825489250818434,
       "p_ifa": 0.125
     },
@@ -190,15 +190,15 @@
       "n": 34,
       "coverage": 0.8756677018633541,
       "coverage_ci95": [
-        0.7890189303982463,
-        0.9466416925465837
+        0.7885176059554256,
+        0.9478445378151261
       ],
       "median_coverage": 1.0,
       "rsr": 0.657676345028349,
       "lift_vs_random": 1.331456891346166,
       "p_vs_random": 5.264849796305436e-05,
-      "var_mention_coverage": 0.8790933079424129,
-      "var_mention_rsr": 0.6351062556847776,
+      "var_mention_coverage": 0.8790933079424128,
+      "var_mention_rsr": 0.6351062556847777,
       "p_vs_var_mention": 0.3622125914476987,
       "ifa_top_down": 348.79411764705884,
       "ifa_sink_proximity": 388.8529411764706,
@@ -208,7 +208,7 @@
       "top3_sink_proximity": 0.2647058823529412,
       "top5_top_down": 0.3235294117647059,
       "top5_sink_proximity": 0.4411764705882353,
-      "effort_top_down": 0.6295153198758499,
+      "effort_top_down": 0.62951531987585,
       "effort_sink_proximity": 0.5108716344761137,
       "p_ifa": 0.08395221103369933
     },
@@ -234,7 +234,7 @@
       "top3_sink_proximity": 0.0,
       "top5_top_down": 0.1111111111111111,
       "top5_sink_proximity": 0.0,
-      "effort_top_down": 0.26564596727977124,
+      "effort_top_down": 0.2656459672797713,
       "effort_sink_proximity": 0.44335050679473514,
       "p_ifa": 0.12890625
     },
@@ -242,15 +242,15 @@
       "n": 140,
       "coverage": 0.8299791617562662,
       "coverage_ci95": [
-        0.7819750576662501,
-        0.8736518262322157
+        0.7826045946671377,
+        0.8739974914072247
       ],
       "median_coverage": 1.0,
       "rsr": 0.5514608600436023,
       "lift_vs_random": 1.505055429846177,
       "p_vs_random": 1.6157935945316254e-15,
       "var_mention_coverage": 0.8774054491734445,
-      "var_mention_rsr": 0.5635404243779271,
+      "var_mention_rsr": 0.5635404243779272,
       "p_vs_var_mention": 0.03763095076050941,
       "ifa_top_down": 28.45,
       "ifa_sink_proximity": 17.12857142857143,
@@ -266,17 +266,17 @@
     },
     "php-src": {
       "n": 95,
-      "coverage": 0.9641983747246907,
+      "coverage": 0.9641983747246905,
       "coverage_ci95": [
-        0.9319879243563454,
-        0.990561821219716
+        0.9315282524493053,
+        0.990431761221235
       ],
       "median_coverage": 1.0,
-      "rsr": 0.6487672543165482,
-      "lift_vs_random": 1.4862007419601306,
+      "rsr": 0.6487672543165481,
+      "lift_vs_random": 1.4862007419601304,
       "p_vs_random": 1.7960632276818743e-15,
-      "var_mention_coverage": 0.968474215842637,
-      "var_mention_rsr": 0.5535666134743519,
+      "var_mention_coverage": 0.9684742158426369,
+      "var_mention_rsr": 0.553566613474352,
       "p_vs_var_mention": 0.39802471950693785,
       "ifa_top_down": 32.252631578947366,
       "ifa_sink_proximity": 17.157894736842106,

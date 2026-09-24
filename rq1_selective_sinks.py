@@ -184,6 +184,14 @@ def run_timing(pairs):
 
 
 FULL_JSONL = os.path.join(HERE, "data", "bigvul_full", "test.jsonl")
+FULL_PARQUET = os.path.join(HERE, "data", "bigvul_full", "test.parquet")
+
+
+def ensure_full_jsonl():
+    """The full-population JSONL is derived from the shipped parquet (as in rq1_full_population.py)."""
+    if not os.path.exists(FULL_JSONL) and os.path.exists(FULL_PARQUET):
+        import pandas as pd  # noqa: PLC0415
+        pd.read_parquet(FULL_PARQUET).to_json(FULL_JSONL, orient="records", lines=True)
 
 
 def main():
@@ -192,6 +200,7 @@ def main():
     out = {"n_candidates": len(pairs),
            "variants": [run_variant(n, c, pairs) for n, c in VARIANTS.items()],
            "timing": run_timing(pairs)}
+    ensure_full_jsonl()
     if os.path.exists(FULL_JSONL):
         full = vuln_pairs(load_all_rows(FULL_JSONL), 10 ** 9)
         out["full_population"] = {"n_candidates": len(full),

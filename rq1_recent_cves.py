@@ -136,12 +136,14 @@ def summarize(rows):
 
 def main():
     all_pairs, seen = [], set()
-    for repo in sys.argv[1:]:
+    # Sort repositories and pairs so results (incl. the seeded bootstrap CI) don't depend on CLI order.
+    for repo in sorted(sys.argv[1:], key=lambda r: os.path.basename(r.rstrip("/"))):
         for p in mine(repo):
             h = hashlib.sha1((p["func_before"] + "\0" + p["func_after"]).encode("utf-8", "replace")).hexdigest()
             if h not in seen:
                 seen.add(h)
                 all_pairs.append(p)
+    all_pairs.sort(key=lambda p: (p["repo"], p["commit"], p["file"], p["function"]))
     rows = evaluate(all_pairs)
     by_repo = collections.defaultdict(list)
     for r in rows:
