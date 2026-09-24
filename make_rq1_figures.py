@@ -58,10 +58,11 @@ def iso_lift(ax, xmax=0.8):
         m = ys <= 1.0
         ax.plot(xs[m], ys[m], color=INK2, lw=0.6, ls=(0, (3, 2)), zorder=1)
         if lift == 1.0:   # the random line crosses empty space at the lower left
-            ax.text(0.47, 0.47 - 0.03, lab, color=INK2, fontsize=6.2, ha="left", va="top")
+            ax.text(0.47, 0.47 - 0.03, lab, color=INK2, fontsize=6.2, ha="left", va="top", bbox=BACKING, zorder=4)
         else:             # label the steeper lines low on the left, clear of the point labels
             xl = {1.5: 0.46, 2.0: 0.30}[lift]
-            ax.text(xl - 0.005, lift * xl + 0.012, lab, color=INK2, fontsize=6.2, ha="right", va="bottom")
+            ax.text(xl - 0.005, lift * xl + 0.012, lab, color=INK2, fontsize=6.2, ha="right", va="bottom",
+                    bbox=BACKING, zorder=4)
 
 
 def point(ax, x, y, color, marker, label, dx=0.012, dy=0.0, ha="left", lead=False):
@@ -69,18 +70,21 @@ def point(ax, x, y, color, marker, label, dx=0.012, dy=0.0, ha="left", lead=Fals
     # fill and shape still separate the three families when printed in greyscale. Labels of
     # crowded or coinciding points sit in free space with a thin leader line (lead=True).
     if marker == "s":
-        ax.scatter([x], [y], s=34, facecolor="white", edgecolor=color, marker=marker, linewidth=1.4, zorder=3)
+        ax.scatter([x], [y], s=46, facecolor="none", edgecolor=color, marker=marker, linewidth=1.4, zorder=2)
     else:
-        ax.scatter([x], [y], s=34, color=color, marker=marker, edgecolor="white", linewidth=0.9, zorder=3)
+        ax.scatter([x], [y], s=30, color=color, marker=marker, edgecolor="white", linewidth=0.7, zorder=3)
     arrow = dict(arrowstyle="-", color=INK2, lw=0.5, shrinkA=1, shrinkB=3) if lead else None
     ax.annotate(label, (x, y), xytext=(x + dx, y + dy), color=INK, fontsize=6.6, ha=ha, va="center",
-                zorder=4, arrowprops=arrow)
+                zorder=4, arrowprops=arrow, bbox=BACKING)
+
+
+BACKING = dict(boxstyle="square,pad=0.08", facecolor="white", edgecolor="none", alpha=0.85)
 
 
 def better_cue(ax):
     """Where a good region lies: high coverage at small size (upper left)."""
-    ax.text(0.212, 0.985, "\u2196 better: more of the fix in less code", color=INK2, fontsize=6.2,
-            ha="left", va="top", style="italic")
+    ax.text(0.212, 0.985, "\u2196 better", color=INK2, fontsize=6.4, ha="left", va="top", style="italic",
+            bbox=BACKING, zorder=4)
 
 
 def region_map():
@@ -102,7 +106,7 @@ def region_map():
         ("Random lines", rsr, b["random_lines"]["mean_coverage_deletion"], AQUA, "s", 0.06, -0.045, "left", True),
     ]
     b_pts = [
-        ("Backward from sinks", d["backward"]["mean_rsr"], d["backward"]["mean_coverage"], BLUE, "o", -0.016, 0.025, "right", False),
+        ("Backward from sinks", d["backward"]["mean_rsr"], d["backward"]["mean_coverage"], BLUE, "o", -0.09, 0.04, "right", True),
         ("Backward, data only", d["backward_data"]["mean_rsr"], d["backward_data"]["mean_coverage"], BLUE, "o", 0.014, -0.02, "left", False),
         ("Forward \u222a backward", d["union"]["mean_rsr"], d["union"]["mean_coverage"], ORANGE, "^", 0.0, 0.045, "center", False),
         ("Forward from inputs", d["forward"]["mean_rsr"], d["forward"]["mean_coverage"], ORANGE, "^", 0.014, 0.0, "left", False),
@@ -119,10 +123,11 @@ def region_map():
         ax.set_ylim(0.3, 1.0)
         ax.set_xlabel("Region size (share of function kept, RSR)")
         ax.set_title(title, loc="left")
-    axes[0].set_ylabel("Deleted fix lines covered")
-    handles = [plt.Line2D([], [], marker="o", color=BLUE, ls="", markersize=5, markeredgecolor="white"),
-               plt.Line2D([], [], marker="^", color=ORANGE, ls="", markersize=5, markeredgecolor="white"),
-               plt.Line2D([], [], marker="s", ls="", markersize=5, markerfacecolor="white",
+    axes[0].set_ylabel("Deleted fix lines covered (share)")
+    axes[1].tick_params(labelleft=True)
+    handles = [plt.Line2D([], [], marker="o", color=BLUE, ls="", markersize=6.5, markeredgecolor="white"),
+               plt.Line2D([], [], marker="^", color=ORANGE, ls="", markersize=6.5, markeredgecolor="white"),
+               plt.Line2D([], [], marker="s", ls="", markersize=6.5, markerfacecolor="none",
                           markeredgecolor=AQUA, markeredgewidth=1.4),
                plt.Line2D([], [], color=INK2, lw=0.8, ls=(0, (3, 2)))]
     fig.legend(handles, ["Backward slice (ours)", "srcSlice forward-based", "Baseline region",

@@ -288,16 +288,15 @@ def chip_c(cx, y, segs, base=12.6, maxw=320, fill=C_CHIP, stroke=C_CHIP_S,
 
 def stage(x, y, w, h, tag, title_segs, sub_lines, fill, stroke):
     rrect(x, y, w, h, fill, stroke, r=9, sw=1.9)
-    raw(x + 11, y + 17, tag.upper(), 10.2, "s", "n", "n", C_MUTE, "start", 0.9)
-    rich_fit(x + w / 2, y + 37, title_segs, 16.0, w - 22)
+    rich_fit(x + w / 2, y + 33, title_segs, 17.0, w - 22)
     for i, segs in enumerate(sub_lines):
-        rich_fit(x + w / 2, y + 57 + i * 16, segs, 12.6, w - 18, C_SOFT)
+        rich_fit(x + w / 2, y + 58 + i * 18, segs, 15.0, w - 14, C_SOFT)
 
 
 # ================================================================== canvas
 # Crop to the drawn content (lanes span x 22..1720, y 58..662) so no blank margin sits between the
 # figure and its caption in the paper.
-CX, CY, CW, CH = 12, 50, 1718, 622
+CX, CY, CW, CH = 0, 50, 1730, 622
 add(f'<svg xmlns="http://www.w3.org/2000/svg" width="{CW}" height="{CH}" '
     f'viewBox="{CX} {CY} {CW} {CH}">')
 add('<defs><marker id="ah" viewBox="0 0 10 10" refX="8.5" refY="5" '
@@ -319,8 +318,8 @@ band(1350, 58, 370, 604, C_BAND_EVL, C_BAND_EVL_S,
 cylinder(28, 130, 152, 94, [[("sc", "BigVul")],
                             [("n", "CVE-fixing")],
                             [("n", "commits")]])
-rich(104, 252, [("n", "400 CVE pairs -> RQ1, RQ2")], 12.6, C_MUTE)
-rich(104, 269, [("n", "2,500 functions (1:4) -> RQ3")], 12.6, C_MUTE)
+rich(104, 254, [("n", "400 CVE pairs → RQ1, RQ2")], 14.0, C_MUTE)
+rich(104, 274, [("n", "2,500 functions → RQ3")], 14.0, C_MUTE)
 
 # --------------------------------------------------- ground-truth lane
 doc_shape(243, 98, 168, 60, "func_after", "patched")
@@ -329,12 +328,12 @@ rrect(478, 150, 98, 46, C_DIFF, C_DIFF_S, r=9, sw=1.9)
 rich(527, 179, [("sc", "diff")], 17.0)
 
 arrow(180, 158, 238, 128, dashed=True)
-arrow(180, 198, 238, 224, dashed=True)
+arrow(180, 198, 238, 224)
 poly([(411, 126), (446, 126), (446, 162), (473, 162)], dashed=True)
 poly([(411, 220), (446, 220), (446, 184), (473, 184)], dashed=True)
 
 poly([(576, 173), (1366, 173)], dashed=True)
-rich(968, 162, [("mi", "D(F)"), ("i", "  deleted lines")], 13.6, C_CAP)
+rich(968, 162, [("mi", "D(F)"), ("i", "  deleted lines")], 15.5, C_CAP)
 
 # ------------------------------------------------------------ scope lane
 stage(290, 336, 205, 80, "stage 1", [("sc", "Sink Criterion")],
@@ -369,10 +368,10 @@ arrow(765, 544, 824, 544)
 rich(524, 535, [("mi", "A(F)")], 12.6, C_SOFT)
 rich(794, 535, [("mi", "φ")], 14.0, C_SOFT)
 
-rich(248, 623, [("mi", "φ :")], 14.0, C_SOFT, "start")
+rich(248, 626, [("mi", "φ :")], 16.0, C_SOFT, "start")
 cx = 282
-for lbl in ["op:>", "ctrl:if", "idx", "callee:memcpy", "lit:number", "type:size_t", "mod:*"]:
-    cx += chip(cx, 607, [("mb", lbl)], 12.4) + 10
+for lbl in ["op:>", "ctrl:if", "idx", "callee:memcpy", "lit:number", "type:size_t"]:
+    cx += chip(cx, 607, [("mb", lbl)], 14.5, h=30) + 10
 
 # --------------------------------------------- measured representation
 rrect(1115, 302, 180, 360, C_COMB, C_COMB_S, r=13, sw=2.0)
@@ -381,12 +380,12 @@ rich(1205, 370, [("mb", "( S , φ )")], 20.0, "#231205")
 add(f'<line x1="1140" y1="390" x2="1270" y2="390" stroke="{C_COMB_S}" '
     f'stroke-width="1.2"/>')
 rich(1205, 416, [("i", "scope"), ("n", "  ×  "), ("i", "content")], 14.0, "#3D2411")
-rich(1205, 450, [("n", "content variants")], 13.2, "#3D2411")
+rich(1205, 450, [("n", "content variants")], 15.0, "#3D2411")
 for i, lbl in enumerate(["raw tokens", "normalized tokens", "φ features"]):
-    rrect(1140, 462 + i * 34, 130, 26, "#FFF5EE", "#C4885C", r=7, sw=1.2)
-    rich(1205, 480 + i * 34, [("n", lbl)], 12.6, C_SOFT)
-rich(1205, 590, [("n", "TF–IDF +")], 13.0, "#3D2411")
-rich(1205, 607, [("n", "logistic regression")], 13.0, "#3D2411")
+    rrect(1132, 462 + i * 36, 146, 29, "#FFF5EE", "#C4885C", r=7, sw=1.2)
+    rich_fit(1205, 482 + i * 36, [("n", lbl)], 14.5, 138, C_SOFT)
+rich(1205, 592, [("n", "TF–IDF +")], 15.0, "#3D2411")
+rich(1205, 611, [("n", "logistic regression")], 15.0, "#3D2411")
 
 arrow(1035, 376, 1110, 376)
 arrow(1035, 544, 1110, 544)
@@ -395,13 +394,12 @@ arrow(1035, 544, 1110, 544)
 def rq(y, h, tag, title_lines, question, chips, fill, stroke, cfill, cstroke):
     x, w = 1372, 326
     rrect(x, y, w, h, fill, stroke, r=11, sw=1.9)
-    raw(x + 13, y + 20, tag.upper(), 10.6, "s", "n", "n", C_MUTE, "start", 1.1)
     for i, tl in enumerate(title_lines):
-        rich_fit(x + w / 2, y + 42 + i * 20, tl, 15.8, w - 26)
-    by = y + 42 + (len(title_lines) - 1) * 20 + 22
-    rich_fit(x + w / 2, by, question, 12.8, w - 22, C_SOFT)
+        rich_fit(x + w / 2, y + 32 + i * 20, [("b", tag.upper() + ":  ")] + tl, 16.5, w - 22)
+    by = y + 32 + (len(title_lines) - 1) * 20 + 24
+    rich_fit(x + w / 2, by, question, 14.5, w - 18, C_SOFT)
     for j, cs in enumerate(chips):
-        chip_c(x + w / 2, by + 12 + j * 29, cs, 12.6, w - 28, cfill, cstroke)
+        chip_c(x + w / 2, by + 12 + j * 32, cs, 14.0, w - 22, cfill, cstroke, h=28)
 
 
 rq(96, 180, "rq 1", [[("sc", "Fix Localization")]],
@@ -431,7 +429,7 @@ rich(1346, 214, [("mi", "S")], 12.8, C_SOFT)
 
 # ---------------------------------------------------------------- legend
 lx, ly = 22, 318
-raw(lx, ly, "Legend", 12.4, "s", "b", "n", C_SOFT, "start")
+raw(lx, ly, "Legend", 14.0, "s", "b", "n", C_SOFT, "start")
 add(f'<line x1="{lx}" y1="{ly + 8}" x2="{lx + 160}" y2="{ly + 8}" '
     f'stroke="#D2D2DA" stroke-width="1"/>')
 items = [(C_DOC, C_DOC_S, "input / ground truth"),
@@ -443,14 +441,14 @@ items = [(C_DOC, C_DOC_S, "input / ground truth"),
 for i, (f, s, lbl) in enumerate(items):
     y = ly + 22 + i * 24
     rrect(lx, y, 17, 12, f, s, r=3, sw=1.2)
-    raw(lx + 24, y + 11, lbl, 11.9, "s", "n", "n", C_SOFT, "start")
+    raw(lx + 22, y + 11, lbl, 12.6, "s", "n", "n", C_SOFT, "start")
 add(f'<line x1="{lx}" y1="{ly + 22 + 6 * 24 + 8}" x2="{lx + 160}" '
     f'y2="{ly + 22 + 6 * 24 + 8}" stroke="#D2D2DA" stroke-width="1"/>')
-raw(lx, ly + 22 + 6 * 24 + 26, "solid = data path", 11.4, "s", "n", "i",
+raw(lx, ly + 22 + 6 * 24 + 26, "solid = data path", 13.0, "s", "n", "i",
     C_MUTE, "start")
-raw(lx, ly + 22 + 6 * 24 + 42, "dashed = measurement", 11.4, "s", "n", "i",
+raw(lx, ly + 22 + 6 * 24 + 42, "dashed = measurement", 13.0, "s", "n", "i",
     C_MUTE, "start")
-raw(lx, ly + 22 + 6 * 24 + 56, "only (func_after)", 11.4, "s", "n", "i",
+raw(lx, ly + 22 + 6 * 24 + 56, "only (func_after)", 13.0, "s", "n", "i",
     C_MUTE, "start")
 
 add('</svg>')
