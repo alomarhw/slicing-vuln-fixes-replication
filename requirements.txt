@@ -1,3 +1,4 @@
+cairosvg
 datasets==2.20.0
 gdown
 huggingface_hub

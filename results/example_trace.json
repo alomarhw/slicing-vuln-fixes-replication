@@ -1,0 +1,311 @@
+{
+  "cve": "CVE-2017-13006",
+  "function": "l2tp_q931_cc_print",
+  "before": {
+    "params": [],
+    "sinks": [
+      {
+        "line": 3,
+        "reasons": [
+          "call"
+        ]
+      },
+      {
+        "line": 4,
+        "reasons": [
+          "call",
+          "subscript"
+        ]
+      },
+      {
+        "line": 6,
+        "reasons": [
+          "call"
+        ]
+      },
+      {
+        "line": 7,
+        "reasons": [
+          "call",
+          "arithmetic over identifier"
+        ]
+      }
+    ],
+    "steps": [
+      {
+        "pop": 7,
+        "uses": [
+          "dat",
+          "length",
+          "ndo",
+          "print_string"
+        ],
+        "data": [],
+        "control": [
+          5
+        ]
+      },
+      {
+        "pop": 5,
+        "uses": [
+          "length"
+        ],
+        "data": [],
+        "control": []
+      },
+      {
+        "pop": 6,
+        "uses": [
+          "ND_PRINT",
+          "ndo"
+        ],
+        "data": [],
+        "control": []
+      },
+      {
+        "pop": 4,
+        "uses": [
+          "ND_PRINT",
+          "dat",
+          "ndo"
+        ],
+        "data": [],
+        "control": []
+      },
+      {
+        "pop": 3,
+        "uses": [
+          "dat",
+          "ndo",
+          "print_16bits_val"
+        ],
+        "data": [],
+        "control": []
+      }
+    ],
+    "slice": [
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "n": 9
+  },
+  "after": {
+    "params": [],
+    "sinks": [
+      {
+        "line": 4,
+        "reasons": [
+          "call"
+        ]
+      },
+      {
+        "line": 7,
+        "reasons": [
+          "call"
+        ]
+      },
+      {
+        "line": 8,
+        "reasons": [
+          "call",
+          "subscript"
+        ]
+      },
+      {
+        "line": 12,
+        "reasons": [
+          "call"
+        ]
+      },
+      {
+        "line": 13,
+        "reasons": [
+          "call"
+        ]
+      }
+    ],
+    "steps": [
+      {
+        "pop": 13,
+        "uses": [
+          "dat",
+          "length",
+          "ndo",
+          "print_string"
+        ],
+        "data": [
+          {
+            "line": 9,
+            "var": "dat"
+          },
+          {
+            "line": 10,
+            "var": "length"
+          }
+        ],
+        "control": [
+          11
+        ]
+      },
+      {
+        "pop": 11,
+        "uses": [
+          "length"
+        ],
+        "data": [],
+        "control": []
+      },
+      {
+        "pop": 10,
+        "uses": [
+          "length"
+        ],
+        "data": [],
+        "control": []
+      },
+      {
+        "pop": 9,
+        "uses": [
+          "dat"
+        ],
+        "data": [],
+        "control": []
+      },
+      {
+        "pop": 12,
+        "uses": [
+          "ND_PRINT",
+          "ndo"
+        ],
+        "data": [],
+        "control": []
+      },
+      {
+        "pop": 8,
+        "uses": [
+          "ND_PRINT",
+          "dat",
+          "ndo"
+        ],
+        "data": [],
+        "control": []
+      },
+      {
+        "pop": 7,
+        "uses": [
+          "dat",
+          "ndo",
+          "print_16bits_val"
+        ],
+        "data": [],
+        "control": []
+      },
+      {
+        "pop": 4,
+        "uses": [
+          "ND_PRINT",
+          "ndo"
+        ],
+        "data": [],
+        "control": [
+          3
+        ]
+      },
+      {
+        "pop": 3,
+        "uses": [
+          "length"
+        ],
+        "data": [],
+        "control": []
+      }
+    ],
+    "slice": [
+      3,
+      4,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+    ],
+    "n": 15
+  },
+  "deleted_lines": [
+    5,
+    7
+  ],
+  "added_lines": [
+    3,
+    4,
+    5,
+    6,
+    9,
+    10,
+    11,
+    13
+  ],
+  "coverage": 1.0,
+  "rsr": "5/9",
+  "variable_mention_region": [
+    1,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "phi_before_slice": [
+    "call",
+    "callee:ND_PRINT",
+    "callee:print_16bits_val",
+    "callee:print_string",
+    "ctrl:condition",
+    "ctrl:if",
+    "idx",
+    "lit:number",
+    "lit:string",
+    "op:(",
+    "op:)",
+    "op:*",
+    "op:+",
+    "op:,",
+    "op:-",
+    "op:>"
+  ],
+  "phi_after_slice": [
+    "call",
+    "callee:ND_PRINT",
+    "callee:print_16bits_val",
+    "callee:print_string",
+    "ctrl:condition",
+    "ctrl:if",
+    "idx",
+    "lit:number",
+    "lit:string",
+    "op:!=",
+    "op:(",
+    "op:)",
+    "op:*",
+    "op:+=",
+    "op:,",
+    "op:-=",
+    "op:<"
+  ],
+  "phi_removed": [
+    "op:+",
+    "op:-",
+    "op:>"
+  ],
+  "phi_added": [
+    "op:!=",
+    "op:+=",
+    "op:-=",
+    "op:<"
+  ]
+}

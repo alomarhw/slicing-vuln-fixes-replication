@@ -71,7 +71,8 @@ CodeBERT is by far the slowest step and needs a GPU (we used the Metal backend).
 | RQ1 sink density | `rq1_sink_density.py` | `rq1_sink_density.json` |
 | RQ3 frozen CodeBERT, same protocol | `rq3_codebert_repeated.py embed` (codebert venv), then `probe` (main venv) | `rq3_codebert_repeated.json` |
 | RQ3 context baselines | `baselines_sota.py`, `graph_model.py`, `finetune_codebert.py`, `fusion_study.py` (codebert venv) | `baselines_results.json`, `graph_results.json`, `finetuned_codebert_results.json`, `fusion_results.json` |
-| Fig. 1 | `make_fig1.py` | `figures/method_diagram.pdf` |
+| Motivating-example figure (sinks, worklist order, slice, phi delta) | `example_trace.py` | `example_trace.json` |
+| Pipeline figure | `make_fig1.py` (PDF/PNG need `cairosvg` and the cairo library) | `figures/method_diagram.pdf` |
 | RQ1 region-map and effort figures | `make_rq1_figures.py` | `figures/fig_region_map.pdf`, `figures/fig_effort.pdf`, `results/figure_data.json` |
 
 ## Optional steps (external tools or data)

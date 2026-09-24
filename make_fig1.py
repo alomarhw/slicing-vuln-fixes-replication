@@ -15,7 +15,7 @@ import os
 
 from PIL import ImageFont
 
-W, H = 1740, 880
+W, H = 1740, 690
 
 SERIF = "DejaVu Serif, Liberation Serif, Times New Roman, Times, serif"
 MONO = "DejaVu Sans Mono, Courier New, monospace"
@@ -306,13 +306,11 @@ add(f'<rect width="{W}" height="{H}" fill="#FFFFFF"/>')
 band(215, 58, 530, 212, C_BAND_GT, C_BAND_GT_S,
      [("i", "Ground truth \u2014 consulted for measurement only")])
 band(215, 294, 865, 164, C_BAND_SCP, C_BAND_SCP_S,
-     [("i", "Scope \u2014 dependency-aware backward slice, computed from "),
-      ("m", "func_before"), ("i", " alone")])
+     [("i", "Scope \u2014 backward slice from "), ("m", "func_before"), ("i", " alone")])
 band(215, 472, 865, 190, C_BAND_CNT, C_BAND_CNT_S,
-     [("i", "Content \u2014 abstract structural features read off the srcML AST "
-            "over that scope")])
-band(1350, 58, 370, 782, C_BAND_EVL, C_BAND_EVL_S,
-     [("i", "Controlled, non-circular evaluation")])
+     [("i", "Content \u2014 srcML features over that scope")])
+band(1350, 58, 370, 604, C_BAND_EVL, C_BAND_EVL_S,
+     [("i", "Evaluation")])
 
 # --------------------------------------------------------------- corpus
 cylinder(28, 130, 152, 94, [[("sc", "BigVul")],
@@ -333,213 +331,103 @@ poly([(411, 126), (446, 126), (446, 162), (473, 162)], dashed=True)
 poly([(411, 220), (446, 220), (446, 184), (473, 184)], dashed=True)
 
 poly([(576, 173), (1366, 173)], dashed=True)
-rich(968, 162, [("mi", "D(F)"),
-                ("i", "  \u2014  lines deleted by the human fix;"),
-                ("i", "  the patch is never available at slice time")], 13.6,
-     C_CAP)
-
-# thesis callout
-rrect(772, 192, 308, 78, "#FFFFFF", "#B6B6C4", r=10, sw=1.3, dash="4,3")
-rich(926, 215, [("b", "Scope is not content.")], 14.6, "#25252F")
-rich(926, 235, [("n", "A per-variable profile records "), ("i", "which"),
-                ("n", " variables")], 12.8, C_SOFT)
-rich(926, 251, [("n", "lie in S; \u03c6 records "), ("i", "how"),
-                ("n", " they are used.")], 12.8, C_SOFT)
+rich(968, 162, [("mi", "D(F)"), ("i", "  deleted lines")], 13.6, C_CAP)
 
 # ------------------------------------------------------------ scope lane
-stage(290, 324, 205, 96, "stage 1", [("sc", "Sink Criterion")],
-      [[("n", "SySeVR-style predicate on the")],
-       [("n", "tree-sitter AST: calls, subscripts,")],
-       [("n", "*, &, ->, arithmetic")]], C_OURS, C_OURS_S)
-stage(560, 324, 205, 96, "stage 2", [("sc", "Backward Slicer")],
-      [[("n", "DEF/USE sets from a full AST walk;")],
-       [("n", "unbounded worklist to a fixed point")],
-       [("n", "over reaching defs + control deps")]], C_OURS, C_OURS_S)
-stage(830, 324, 205, 96, "output",
+stage(290, 336, 205, 80, "stage 1", [("sc", "Sink Criterion")],
+      [[("n", "SySeVR-style predicate")]], C_OURS, C_OURS_S)
+stage(560, 336, 205, 80, "stage 2", [("sc", "Backward Slicer")],
+      [[("n", "worklist: data + control")]], C_OURS, C_OURS_S)
+stage(830, 336, 205, 80, "output",
       [("sc", "Slice "), ("mi", "S(F, c)")],
-      [[("n", "the retained line set")],
-       [("mi", "RSR"), ("n", " = |S| / n")],
-       [("n", "intraprocedural, patch-blind")]], C_OURS2, C_OURS2_S)
+      [[("mi", "RSR"), ("n", " = |S| / n")]], C_OURS2, C_OURS2_S)
 
-arrow(495, 372, 554, 372)
-arrow(765, 372, 824, 372)
-rich(524, 363, [("mi", "c")], 13.6, C_SOFT)
-rich(794, 363, [("mi", "S")], 13.6, C_SOFT)
-
-rich(290, 434, [("i", "no line-distance cutoff, no aliasing analysis — "
-                      "no-sink fallback on  "),
-                ("b", "4.4 %")], 11.6, C_SOFT, "start")
-rich(290, 449, [("i", "of functions (5 last-statement, 8 whole-function; 13/294); "
-                      "matched-sink coverage 0.78 in RSR 0.56")], 11.6, C_SOFT, "start")
+arrow(495, 376, 554, 376)
+arrow(765, 376, 824, 376)
+rich(524, 367, [("mi", "c")], 13.6, C_SOFT)
+rich(794, 367, [("mi", "S")], 13.6, C_SOFT)
 
 # function feed
-poly([(250, 252), (250, 372), (284, 372)])
-poly([(250, 372), (250, 554), (284, 554)])
+poly([(250, 252), (250, 376), (284, 376)])
+poly([(250, 376), (250, 544), (284, 544)])
 rich(242, 464, [("mi", "F")], 14.5, C_INK, "end")
 
 # ---------------------------------------------------------- content lane
-stage(290, 506, 205, 96, "external tool", [("sc", "srcML Parse")],
-      [[("n", "fact-preserving XML markup;")],
-       [("n", "full parse tree A(F) without")],
-       [("n", "requiring the code to compile")]], C_TOOL, C_TOOL_S)
-stage(560, 506, 205, 96, "stage 3", [("sc", "AST Visitor")],
-      [[("n", "project A(F) onto the scope S;")],
-       [("n", "drop variable names; keep")],
-       [("n", "callee & type names")]], C_OURS, C_OURS_S)
-stage(830, 506, 205, 96, "output",
-      [("sc", "Features "), ("mi", "\u03c6(F, S)")],
-      [[("n", "operators \u00b7 guards \u00b7 literal")],
-       [("n", "& type kinds \u00b7 callee/index")],
-       [("n", "as a set of feature tokens")]], C_OURS2, C_OURS2_S)
+stage(290, 504, 205, 80, "external tool", [("sc", "srcML Parse")],
+      [[("n", "XML markup, no compile")]], C_TOOL, C_TOOL_S)
+stage(560, 504, 205, 80, "stage 3", [("sc", "AST Visitor")],
+      [[("n", "abstract elements in S")]], C_OURS, C_OURS_S)
+stage(830, 504, 205, 80, "output",
+      [("sc", "Features "), ("mi", "φ(F, S)")],
+      [[("n", "set of feature tokens")]], C_OURS2, C_OURS2_S)
 
-arrow(495, 554, 554, 554)
-arrow(765, 554, 824, 554)
-rich(524, 545, [("mi", "A(F)")], 12.6, C_SOFT)
-rich(794, 545, [("mi", "\u03c6")], 14.0, C_SOFT)
+arrow(495, 544, 554, 544)
+arrow(765, 544, 824, 544)
+rich(524, 535, [("mi", "A(F)")], 12.6, C_SOFT)
+rich(794, 535, [("mi", "φ")], 14.0, C_SOFT)
 
-rich(248, 631, [("mi", "\u03c6 :")], 14.0, C_SOFT, "start")
+rich(248, 623, [("mi", "φ :")], 14.0, C_SOFT, "start")
 cx = 282
-for lbl in ["idx", "ctrl:if", "op:>", "callee:print_string", "op:+",
-            "op:-", "call", "lit:number"]:
-    cx += chip(cx, 615, [("mb", lbl)], 12.4) + 10
+for lbl in ["op:>", "ctrl:if", "idx", "callee:memcpy", "lit:number", "type:size_t", "mod:*"]:
+    cx += chip(cx, 607, [("mb", lbl)], 12.4) + 10
 
-# --------------------------------------------- combined representation
+# --------------------------------------------- measured representation
 rrect(1115, 302, 180, 360, C_COMB, C_COMB_S, r=13, sw=2.0)
-rich(1205, 334, [("b", "R(F) = ")], 17.5, "#231205")
-rich(1205, 364, [("mb", "( S , \u03c6 )")], 20.0, "#231205")
-add(f'<line x1="1140" y1="382" x2="1270" y2="382" stroke="{C_COMB_S}" '
+rich(1205, 340, [("b", "R(F) = ")], 17.5, "#231205")
+rich(1205, 370, [("mb", "( S , φ )")], 20.0, "#231205")
+add(f'<line x1="1140" y1="390" x2="1270" y2="390" stroke="{C_COMB_S}" '
     f'stroke-width="1.2"/>')
-rich(1205, 404, [("i", "scope"), ("m", " (+) "),
-                 ("i", "content")], 14.0, "#3D2411")
-rich(1205, 426, [("n", "content variants:")], 13.2, "#3D2411")
-rich(1205, 442, [("n", "tokens / normalized / \u03c6")], 12.4, "#3D2411")
-rrect(1136, 456, 138, 62, "#FFF5EE", "#C4885C", r=8, sw=1.3)
-rich(1205, 476, [("n", "TF\u2013IDF over")], 12.6, C_SOFT)
-rich(1205, 492, [("m", "the region\u2019s")], 12.4, C_SOFT)
-rich(1205, 508, [("m", "content")], 12.4, C_SOFT)
-rich(1205, 536, [("n", "class-weighted")], 13.0, "#3D2411")
-rich(1205, 552, [("n", "logistic regression")], 13.0, "#3D2411")
-rrect(1136, 566, 138, 62, "#FFF5EE", "#C4885C", r=8, sw=1.3)
-rich(1205, 587, [("i", "CPU-only, no GPU;")], 12.6, C_SOFT)
-rich(1205, 603, [("i", "interpretable and")], 12.6, C_SOFT)
-rich(1205, 619, [("i", "millisecond-scale")], 12.6, C_SOFT)
-rich(1205, 648, [("n", "\u2014 no patch is generated \u2014")], 12.4, C_MUTE)
+rich(1205, 416, [("i", "scope"), ("n", "  ×  "), ("i", "content")], 14.0, "#3D2411")
+rich(1205, 450, [("n", "content variants")], 13.2, "#3D2411")
+for i, lbl in enumerate(["raw tokens", "normalized tokens", "φ features"]):
+    rrect(1140, 462 + i * 34, 130, 26, "#FFF5EE", "#C4885C", r=7, sw=1.2)
+    rich(1205, 480 + i * 34, [("n", lbl)], 12.6, C_SOFT)
+rich(1205, 590, [("n", "TF–IDF +")], 13.0, "#3D2411")
+rich(1205, 607, [("n", "logistic regression")], 13.0, "#3D2411")
 
-arrow(1035, 372, 1110, 372)
-arrow(1035, 554, 1110, 554)
+arrow(1035, 376, 1110, 376)
+arrow(1035, 544, 1110, 544)
 
 # ------------------------------------------------------- evaluation lane
-def rq(y, h, tag, title_lines, body, chips, fill, stroke, cfill, cstroke,
-       note=None):
+def rq(y, h, tag, title_lines, question, chips, fill, stroke, cfill, cstroke):
     x, w = 1372, 326
     rrect(x, y, w, h, fill, stroke, r=11, sw=1.9)
     raw(x + 13, y + 20, tag.upper(), 10.6, "s", "n", "n", C_MUTE, "start", 1.1)
     for i, tl in enumerate(title_lines):
         rich_fit(x + w / 2, y + 42 + i * 20, tl, 15.8, w - 26)
     by = y + 42 + (len(title_lines) - 1) * 20 + 22
-    for i, ln in enumerate(body):
-        rich_fit(x + w / 2, by + i * 16, ln, 12.5, w - 22, C_SOFT)
-    cy = by + len(body) * 16 + 6
+    rich_fit(x + w / 2, by, question, 12.8, w - 22, C_SOFT)
     for j, cs in enumerate(chips):
-        chip_c(x + w / 2, cy + j * 29, cs, 12.8, w - 28, cfill, cstroke)
-    if note:
-        for k, nl in enumerate(note):
-            rich_fit(x + w / 2, cy + len(chips) * 29 + 16 + k * 15, nl, 11.8,
-                     w - 22, C_MUTE)
+        chip_c(x + w / 2, by + 12 + j * 29, cs, 12.6, w - 28, cfill, cstroke)
 
 
-rq(100, 218, "rq 1", [[("sc", "Fix Localization")]],
-   [[("mi", "S(F, c)"), ("n", "  vs.  "),
-     ("m", "func_before->func_after"), ("n", "  diff")],
-    [("n", "294 CVE pairs \u00b7 the slice never sees the patch")]],
-   [[("b", "coverage 78.1 %"), ("n", "   \u00b7   "), ("b", "RSR 56.9 %")],
-    [("n", "95 % bootstrap CI  [74.0, 82.1]  and  [54.2, 59.5]")],
-    [("n", "median coverage 100 %  \u00b7  1.38\u00d7 lift over random")]],
-   C_RQ1, C_RQ1_S, "#C4DBF3", C_RQ1_S,
-   note=[[("i", "\u2248 var.-mention region \u00b7 81.7 % on 760 pairs, 89 % on 369 recent fixes")]])
+rq(96, 180, "rq 1", [[("sc", "Fix Localization")]],
+   [("i", "Does the slice contain the fix?")],
+   [[("mi", "Coverage"), ("n", " = |S ∩ D(F)| / |D(F)|")],
+    [("mi", "RSR"), ("n", " = |S| / n")],
+    [("n", "vs. size-matched regions")]],
+   C_RQ1, C_RQ1_S, "#C4DBF3", C_RQ1_S)
 
-rq(332, 250, "rq 2", [[("sc", "Patch-Signature")], [("sc", "Discrimination")]],
-   [[("mi", "\u0394"), ("n", " = f(after) \\ f(before) over a region, non-empty")],
-    [("n", "vs. srcSlice\u2019s coarse per-variable profile")],
-    [("n", "dual signature: containment rule, 70 / 30 database-test")]],
-   [[("n", "non-empty \u0394  "), ("b", "25.6 % -> 52.8 %"), ("n", "  (316 pairs)")],
-    [("n", "exact McNemar  "), ("mb", "p = 6.2e-18"),
-     ("n", "  \u00b7  98 gain / 12 lose")],
-    [("n", "held-out matching  MCC  "), ("b", "\u22120.02 / 0.03"),
-     ("n", "  (full split 0.00 / 0.06)")]],
-   C_RQ2, C_RQ2_S, "#EBD1E6", C_RQ2_S,
-   note=[[("i", "\u0394 reacts to any change; held-out matching at chance")]])
+rq(290, 188, "rq 2", [[("sc", "Fix Signatures")]],
+   [("i", "Do feature deltas identify fixes?")],
+   [[("mi", "Δ"), ("n", " = f(after) \\ f(before), non-empty")],
+    [("n", "φ vs. srcSlice profile")],
+    [("n", "held-out matching: BA, MCC")]],
+   C_RQ2, C_RQ2_S, "#EBD1E6", C_RQ2_S)
 
-rq(596, 230, "rq 3", [[("sc", "Detection")]],
-   [[("n", "repeated 30\u00d75-fold CV at 1:4, same classifier & splits")],
-    [("n", "Nadeau\u2013Bengio corrected "), ("mi", "t"),
-     ("n", "-test, Holm-corrected, over 150 splits")]],
-   [[("n", "\u03c6 slice  "), ("b", "0.407"), ("n", " > plain slice 0.349  \u00b7  "
-     "Holm "), ("mi", "p"), ("n", " = 0.011")],
-    [("n", "normalized slice tokens "), ("b", "0.415"), ("n", " \u2248 \u03c6 slice ("), ("mi", "p"), ("n", " = 0.57)")],
-    [("n", "frozen CodeBERT, same protocol  "), ("b", "0.504")]],
-   C_RQ3, C_RQ3_S, "#DCDCDC", C_RQ3_S,
-   note=[[("i", "scope: \u03c6 slice \u2248 var.-mention region, also with Joern"), ],
-         [("i", "slices \u00b7 holds with CVE- and project-grouped folds")]])
+rq(492, 158, "rq 3", [[("sc", "Detection")]],
+   [("i", "Does content or scope drive detection?")],
+   [[("n", "scope × content, repeated CV")],
+    [("n", "vs. frozen CodeBERT")]],
+   C_RQ3, C_RQ3_S, "#DCDCDC", C_RQ3_S)
 
-poly([(1295, 342), (1322, 342), (1322, 200), (1368, 200)])
-poly([(1295, 480), (1322, 480), (1322, 460), (1368, 460)])
-poly([(1295, 620), (1322, 620), (1322, 700), (1368, 700)])
-rich(1344, 192, [("mi", "S")], 12.8, C_SOFT, "end")
-
-# ---------------------------------------------------------- worked example
-rrect(215, 690, 865, 158, "#FCFBF8", "#C0C0CB", r=13, sw=1.3)
-raw(233, 712, "Worked example (Sec. III-A) \u2014 CVE-2017-13006, tcpdump",
-    13.4, "s", "b", "n", "#25252F", "start")
-
-add('<rect x="233" y="717" width="384" height="122" rx="7" fill="#FFFFFF" '
-    'stroke="#DCDCE4" stroke-width="1"/>')
-add('<rect x="237" y="764" width="376" height="12" fill="#FBE0E0"/>')
-add('<rect x="237" y="786" width="376" height="12" fill="#FBE0E0"/>')
-code = ["l2tp_q931_cc_print(ndo, dat, length)",
-        "{",
-        "    print_16bits_val(ndo, dat);",
-        "    ND_PRINT(ndo, \"%02x\", dat[2]);",
-        "    if (length > 3) {",
-        "        ND_PRINT(ndo, \" \");",
-        "        print_string(ndo, dat+3, length-3);",
-        "    }",
-        "}"]
-for i, ln in enumerate(code):
-    raw(242, 728 + i * 11.4, ln, 8.8, "m", "n", "n", "#20202A", "start")
-raw(470, 751, "<-  insert: length<3 guard", 9.6, "s", "n", "i",
-    "#699A5D", "start")
-raw(470, 774, "<-  deleted: if (length > 3), line 5", 9.6, "s", "n", "i",
-    "#9A3B3B", "start")
-raw(470, 796, "<-  deleted: print_string, line 7", 9.6, "s", "n", "i",
-    "#9A3B3B", "start")
-
-rich(640, 733, [("mb", "S = {3, 4, 5, 6, 7}"),
-                ("n", "  of 9 lines")], 13.0, C_INK, "start")
-rich(640, 750, [("n", "RSR "), ("m", "\u2248 0.56"),
-                ("n", "  \u00b7  coverage "), ("m", "= 1.0"),
-                ("n", "  (2 of 2 deleted lines in "),
-                ("mi", "S"), ("n", ")")], 12.2, C_SOFT, "start")
-rich(640, 771, [("i", "real fix inserts a "), ("m", "length < 3"),
-                ("i", " guard at entry;"),
-                ], 12.4, C_SOFT, "start")
-rich(640, 785, [("i", "old "), ("m", "length > 3"),
-                ("i", " guard becomes "), ("m", "length != 0")], 12.4, C_SOFT, "start")
-# Actual phi delta over the slice for this fix (augmented_study.aug_slice(after) vs (before)).
-c2 = 640
-raw(c2, 810, "\u0394\u03c6:", 12.4, "s", "n", "n", C_INK, "start")
-c2 += 34
-for lbl in ("op:>", "op:+", "op:-"):                       # removed by the fix
-    c2 += chip(c2, 793, [("mb", lbl)], 11.4, "#FBE0E0", "#BC6A6A") + 4
-c2 += 8
-for lbl in ("op:<", "op:!=", "op:+=", "op:-="):            # added by the fix
-    c2 += chip(c2, 793, [("mb", lbl)], 11.4, "#DEF0DA", "#699A5D") + 4
-rich(638, 833, [("n", "red: removed, green: added; a per-variable profile sees only "),
-                ("m", "dat"), ("n", "/"), ("m", "length")], 11.6, C_MUTE, "start")
-
+poly([(1295, 330), (1322, 330), (1322, 222), (1368, 222)])
+poly([(1295, 430), (1322, 430), (1322, 384), (1368, 384)])
+poly([(1295, 620), (1322, 620), (1322, 571), (1368, 571)])
+rich(1346, 214, [("mi", "S")], 12.8, C_SOFT)
 
 # ---------------------------------------------------------------- legend
-lx, ly = 30, 612
+lx, ly = 22, 318
 raw(lx, ly, "Legend", 12.4, "s", "b", "n", C_SOFT, "start")
 add(f'<line x1="{lx}" y1="{ly + 8}" x2="{lx + 160}" y2="{ly + 8}" '
     f'stroke="#D2D2DA" stroke-width="1"/>')
@@ -557,13 +445,19 @@ add(f'<line x1="{lx}" y1="{ly + 22 + 6 * 24 + 8}" x2="{lx + 160}" '
     f'y2="{ly + 22 + 6 * 24 + 8}" stroke="#D2D2DA" stroke-width="1"/>')
 raw(lx, ly + 22 + 6 * 24 + 26, "solid = data path", 11.4, "s", "n", "i",
     C_MUTE, "start")
-raw(lx, ly + 22 + 6 * 24 + 42, "dashed = ground truth,", 11.4, "s", "n", "i",
+raw(lx, ly + 22 + 6 * 24 + 42, "dashed = measurement", 11.4, "s", "n", "i",
     C_MUTE, "start")
-raw(lx, ly + 22 + 6 * 24 + 56, "measurement only", 11.4, "s", "n", "i",
+raw(lx, ly + 22 + 6 * 24 + 56, "only (func_after)", 11.4, "s", "n", "i",
     C_MUTE, "start")
 
 add('</svg>')
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fig1.svg")
+# In the replication package (a figures/ directory next to this script) the diagram is written to
+# figures/method_diagram.*, the file the paper includes; elsewhere it is written as fig1.* here.
+_HERE = os.path.dirname(os.path.abspath(__file__))
+if os.path.isdir(os.path.join(_HERE, "figures")):
+    OUT = os.path.join(_HERE, "figures", "method_diagram.svg")
+else:
+    OUT = os.path.join(_HERE, "fig1.svg")
 open(OUT, "w").write("\n".join(out))
 print("wrote", OUT)
 
@@ -572,9 +466,10 @@ if __name__ == "__main__":
     try:
         import cairosvg
     except ImportError:
-        print("pip install cairosvg to also emit fig1.pdf / fig1_300dpi.png")
+        print("pip install cairosvg (needs the cairo library) to also emit the PDF and PNG")
     else:
         base = OUT[:-4]
         cairosvg.svg2pdf(url=OUT, write_to=base + ".pdf")
-        cairosvg.svg2png(url=OUT, write_to=base + "_300dpi.png", scale=3.0)
-        print("wrote", base + ".pdf", "and", base + "_300dpi.png")
+        png = base + (".png" if base.endswith("method_diagram") else "_300dpi.png")
+        cairosvg.svg2png(url=OUT, write_to=png, scale=3.0)
+        print("wrote", base + ".pdf", "and", png)

@@ -3,8 +3,8 @@
 run_all.py
 ----------
 Single entrypoint that reproduces every experiment and figure in the paper
-("Scope Is Not Content: Structural Augmentation of Program Slices for
-Vulnerability Fix Localization"), in the correct order, on the correct data.
+("Scope Is Not Content: An Empirical Study of Program Slicing on Real
+Vulnerability Fixes"), in the correct order, on the correct data.
 
 
 TWO PYTHON ENVIRONMENTS are required (see requirements.txt vs
@@ -58,6 +58,11 @@ Steps (5-fold CV on BigVul; seeds 42/1337 as set per-script):
                                                   (fine-tuned, not frozen, CodeBERT baseline)
   9. make_figures.py          [main venv]     -> figures/fig_signature_aug.png,
                                                   fig_detection_aug.png, fig_baselines.png
+ 10. make_fig1.py             [main venv]     -> figures/method_diagram.{svg,pdf,png} (pipeline
+                                                  figure; PDF/PNG need cairosvg + the cairo library)
+ 11. example_trace.py         [main venv]     -> results/example_trace.json (motivating example:
+                                                  sinks, worklist order, slice, phi delta)
+The RQ1/RQ2/RQ3 replication and sensitivity scripts listed in STEPS below run between these.
 
 Each step is a separate, independently-runnable script (kept that way
 deliberately -- this is how the study was actually developed and validated
@@ -123,7 +128,9 @@ STEPS = [
     ("RQ3: fine-tuned CodeBERT baseline (finetune_codebert.py)",
      [CODEBERT_PY, "finetune_codebert.py"]),
     ("Figures: RQ2/RQ3 charts (make_figures.py)", [MAIN_PY, "make_figures.py"]),
-    ("Figure: method diagram (make_method_diagram.py)", [MAIN_PY, "make_method_diagram.py"]),
+    ("Figure: pipeline diagram (make_fig1.py)", [MAIN_PY, "make_fig1.py"]),
+    ("Motivating example trace: sinks, worklist, slice, phi delta (example_trace.py)",
+     [MAIN_PY, "example_trace.py"]),
 ]
 
 
