@@ -547,7 +547,7 @@ items = [(C_DOC, C_DOC_S, "input / ground truth"),
          (C_TOOL, C_TOOL_S, "external tool (srcML)"),
          (C_OURS, C_OURS_S, "our pipeline stage"),
          (C_OURS2, C_OURS2_S, "our derived artefact"),
-         (C_COMB, C_COMB_S, "combined representation"),
+         (C_COMB, C_COMB_S, "measured representation"),
          (C_RQ3, C_RQ3_S, "measurement / evaluation")]
 for i, (f, s, lbl) in enumerate(items):
     y = ly + 22 + i * 24

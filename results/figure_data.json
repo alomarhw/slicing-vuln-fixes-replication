@@ -205,7 +205,7 @@
         0.8278110256568437
       ]
     },
-    "(b) CVE fixes since 2020, 369 pairs": {
+    "(b) CVE fixes committed since 2020, 369 pairs": {
       "Slice, sink proximity": [
         0.0,
         0.0975609756097561,

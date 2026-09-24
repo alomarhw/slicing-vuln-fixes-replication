@@ -65,7 +65,12 @@ def iso_lift(ax, xmax=0.8):
 
 
 def point(ax, x, y, color, marker, label, dx=0.012, dy=0.0, ha="left"):
-    ax.scatter([x], [y], s=34, color=color, marker=marker, edgecolor="white", linewidth=0.9, zorder=3)
+    # Baseline regions (squares) are hollow; our slices and srcSlice-based regions are filled, so
+    # fill and shape still separate the three families when printed in greyscale.
+    if marker == "s":
+        ax.scatter([x], [y], s=34, facecolor="white", edgecolor=color, marker=marker, linewidth=1.4, zorder=3)
+    else:
+        ax.scatter([x], [y], s=34, color=color, marker=marker, edgecolor="white", linewidth=0.9, zorder=3)
     ax.annotate(label, (x, y), xytext=(x + dx, y + dy), color=INK, fontsize=6.6, ha=ha, va="center",
                 zorder=4)
 
@@ -94,8 +99,8 @@ def region_map():
         ("Chop", d["chop"]["mean_rsr"], d["chop"]["mean_coverage"], ORANGE, "^", 0.014, 0.0, "left"),
     ]
     fig, axes = plt.subplots(1, 2, figsize=(7.1, 2.45), sharey=True)
-    for ax, pts, title in ((axes[0], a_pts, f"(a) Regions and sink sets, all {full['n_deletion_pairs']} pairs"),
-                           (axes[1], b_pts, f"(b) Slice direction, {d['n_with_forward']} pairs with a forward slice")):
+    for ax, pts, title in ((axes[0], a_pts, f"(a) Which sinks, which region? All {full['n_deletion_pairs']} pairs"),
+                           (axes[1], b_pts, f"(b) Which direction? {d['n_with_forward']} pairs with a forward slice")):
         iso_lift(ax)
         for lab, x, y, c, mk, dx, dy, ha in pts:
             point(ax, x, y, c, mk, lab, dx, dy, ha)
@@ -104,10 +109,14 @@ def region_map():
         ax.set_xlabel("Region size (share of function kept, RSR)")
         ax.set_title(title, loc="left")
     axes[0].set_ylabel("Deleted fix lines covered")
-    handles = [plt.Line2D([], [], marker=m, color=c, ls="", markersize=5, markeredgecolor="white")
-               for c, m in ((BLUE, "o"), (ORANGE, "^"), (AQUA, "s"))]
-    fig.legend(handles, ["Backward slice (ours)", "srcSlice forward-based", "Baseline region"],
-               loc="outside lower center", ncol=3, frameon=False)
+    handles = [plt.Line2D([], [], marker="o", color=BLUE, ls="", markersize=5, markeredgecolor="white"),
+               plt.Line2D([], [], marker="^", color=ORANGE, ls="", markersize=5, markeredgecolor="white"),
+               plt.Line2D([], [], marker="s", ls="", markersize=5, markerfacecolor="white",
+                          markeredgecolor=AQUA, markeredgewidth=1.4),
+               plt.Line2D([], [], color=INK2, lw=0.8, ls=(0, (3, 2)))]
+    fig.legend(handles, ["Backward slice (ours)", "srcSlice forward-based", "Baseline region",
+                         "Constant lift (1.0\u00d7 = random lines of the same size)"],
+               loc="outside lower center", ncol=4, frameon=False)
     fig.savefig(os.path.join(FIG, "fig_region_map.pdf"))
     fig.savefig(os.path.join(FIG, "fig_region_map.png"), dpi=300)
     return {"a": [(p[0], p[1], p[2]) for p in a_pts], "b": [(p[0], p[1], p[2]) for p in b_pts]}
@@ -151,6 +160,8 @@ def random_cdf(rows, ks):
 
 def effort():
     from consolidated_study import vuln_pairs, load_all_rows
+    from rq1_selective_sinks import ensure_full_jsonl
+    ensure_full_jsonl()  # derive test.jsonl from the shipped parquet when run on its own
     populations = [("(a) BigVul, all 760 deletion pairs",
                     first_positions(vuln_pairs(load_all_rows(os.path.join(HERE, "data", "bigvul_full", "test.jsonl")), 10 ** 9)))]
     if os.path.isdir(REPOS):
@@ -164,22 +175,25 @@ def effort():
                     seen.add(h)
                     pairs.append(p)
         rows = first_positions(pairs)
-        populations.append((f"(b) CVE fixes since 2020, {len(rows)} pairs", rows))
+        populations.append((f"(b) CVE fixes committed since 2020, {len(rows)} pairs", rows))
     ks = list(range(0, 31))
     fig, axes = plt.subplots(1, len(populations), figsize=(7.1, 2.3), sharey=True, squeeze=False)
     data = {}
     for ax, (title, rows) in zip(axes[0], populations):
-        series = [("Slice, sink proximity", cdf(rows, "sink_proximity", ks), BLUE, "-"),
-                  ("Variable mention first", cdf(rows, "var_mention", ks), AQUA, "-"),
-                  ("Top-down (no tool)", cdf(rows, "top_down", ks), ORANGE, "-"),
-                  ("Random order", random_cdf(rows, ks), INK2, (0, (3, 2)))]
-        for lab, ys, c, ls in series:
-            ax.plot(ks, ys, color=c, lw=1.6 if ls == "-" else 0.9, ls=ls, label=lab, solid_capstyle="round")
+        # Line style and marker differ per order, so the curves stay distinct in greyscale print.
+        series = [("Slice, sink proximity", cdf(rows, "sink_proximity", ks), BLUE, "-", "o"),
+                  ("Variable mention first", cdf(rows, "var_mention", ks), AQUA, (0, (5, 2)), "s"),
+                  ("Top-down (no tool)", cdf(rows, "top_down", ks), ORANGE, (0, (6, 2, 1.5, 2)), "^"),
+                  ("Random order", random_cdf(rows, ks), INK2, (0, (1, 1.5)), None)]
+        for lab, ys, c, ls, mk in series:
+            ax.plot(ks, ys, color=c, lw=1.6 if mk else 1.1, ls=ls, label=lab, solid_capstyle="round",
+                    marker=mk, markevery=5, markersize=4.2, markerfacecolor="white" if mk == "s" else c,
+                    markeredgecolor=c)
         ax.set_xlim(0, 30)
         ax.set_ylim(0, 1)
         ax.set_xlabel("Lines read (k)")
         ax.set_title(title, loc="left")
-        data[title] = {lab: ys for lab, ys, _, _ in series}
+        data[title] = {lab: ys for lab, ys, _, _, _ in series}
     axes[0][0].set_ylabel("Functions with a fix line\namong the first k lines read")
     h, l = axes[0][0].get_legend_handles_labels()
     fig.legend(h, l, loc="outside lower center", ncol=4, frameon=False)
