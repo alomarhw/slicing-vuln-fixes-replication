@@ -1,0 +1,3 @@
+void PaintArtifactCompositor::WillBeRemovedFromFrame() {
+  RemoveChildLayers();
+}

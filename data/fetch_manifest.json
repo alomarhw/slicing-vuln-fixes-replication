@@ -1,0 +1,127 @@
+{
+  "ok": [
+    {
+      "status": "ok",
+      "sourceType": "huggingface",
+      "datasetId": "bstee615/bigvul",
+      "split": "test",
+      "path": "data/bigvul/sample.jsonl",
+      "rows": 20000,
+      "contract": {
+        "accessUrl": "https://huggingface.co/datasets/bstee615/bigvul",
+        "dataRequirements": {
+          "confidence": 0.0,
+          "labelField": {
+            "canonical": "label",
+            "type": "unknown"
+          },
+          "modality": "unknown",
+          "rejectModalities": [],
+          "requiredColumns": [],
+          "source": "inferred",
+          "taskType": "unknown"
+        },
+        "datasetId": "bstee615/bigvul",
+        "datasetName": "BigVul",
+        "experimentId": "RQ1-E1",
+        "issues": [],
+        "loaderRecipe": {
+          "codeHint": "Use datasets.load_dataset('bstee615/bigvul', streaming=True when possible); materialize a small deterministic sample/split into data/ for the default run.",
+          "preprocessHint": "Handle DatasetDict splits; flatten nested records only if needed by the metrics.",
+          "pythonPackages": [
+            "datasets"
+          ],
+          "strategy": "huggingface_datasets"
+        },
+        "provenance": {
+          "checksum": "",
+          "citation": "",
+          "license": "",
+          "preprocessing": [],
+          "recordCount": null,
+          "schema": [],
+          "version": ""
+        },
+        "rqId": "RQ1",
+        "source": "public_benchmark",
+        "sourceType": "huggingface",
+        "status": "verified",
+        "verification": "registry_id_resolved"
+      },
+      "checksum": "413ed55516f293c1c52c945ee12be44f0c08be89fa91b9c7b8147f45ec434e17",
+      "recordCount": 20000,
+      "columns": [
+        "CVE ID",
+        "CVE Page",
+        "CWE ID",
+        "codeLink",
+        "commit_id",
+        "commit_message",
+        "func_after",
+        "func_before",
+        "lang",
+        "project",
+        "vul"
+      ]
+    },
+    {
+      "status": "ok",
+      "sourceType": "huggingface",
+      "datasetId": "google/code_x_glue_cc_defect_detection",
+      "split": "test",
+      "path": "data/juliet_test_suite/sample.jsonl",
+      "rows": 2732,
+      "contract": {
+        "accessUrl": "https://huggingface.co/datasets/google/code_x_glue_cc_defect_detection",
+        "dataRequirements": {
+          "confidence": 0.0,
+          "labelField": {
+            "canonical": "label",
+            "type": "unknown"
+          },
+          "modality": "unknown",
+          "rejectModalities": [],
+          "requiredColumns": [],
+          "source": "inferred",
+          "taskType": "unknown"
+        },
+        "datasetId": "google/code_x_glue_cc_defect_detection",
+        "datasetName": "Juliet Test Suite",
+        "experimentId": "RQ1-E2",
+        "issues": [],
+        "loaderRecipe": {
+          "codeHint": "Use datasets.load_dataset('google/code_x_glue_cc_defect_detection', streaming=True when possible); materialize a small deterministic sample/split into data/ for the default run.",
+          "preprocessHint": "Handle DatasetDict splits; flatten nested records only if needed by the metrics.",
+          "pythonPackages": [
+            "datasets"
+          ],
+          "strategy": "huggingface_datasets"
+        },
+        "provenance": {
+          "checksum": "",
+          "citation": "",
+          "license": "",
+          "preprocessing": [],
+          "recordCount": null,
+          "schema": [],
+          "version": ""
+        },
+        "rqId": "RQ1",
+        "source": "public_benchmark",
+        "sourceType": "huggingface",
+        "status": "verified",
+        "verification": "registry_id_resolved"
+      },
+      "checksum": "b4c36945410291c4f5c8117816f3694858b45974941df4a9251eb57712a5a2a1",
+      "recordCount": 2732,
+      "columns": [
+        "id",
+        "func",
+        "target",
+        "project",
+        "commit_id"
+      ]
+    }
+  ],
+  "failed": []
+}

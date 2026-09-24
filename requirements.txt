@@ -1,0 +1,13 @@
+datasets==2.20.0
+gdown
+huggingface_hub
+matplotlib==3.10.9
+numpy==2.3.5
+pandas==3.0.3
+pytest
+requests==2.32.3
+scikit-learn==1.9.0
+scipy==1.17.1
+seaborn==0.13.2
+tree-sitter>=0.22
+tree-sitter-c>=0.21

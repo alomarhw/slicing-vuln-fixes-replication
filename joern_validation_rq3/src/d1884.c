@@ -1,0 +1,3 @@
+SystemKeyEventListener::~SystemKeyEventListener() {
+  Stop();
+}

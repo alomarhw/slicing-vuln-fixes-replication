@@ -1,0 +1,97 @@
+{
+  "seed": 1337,
+  "data_path": "data/bigvul/sample.jsonl",
+  "disclaimer": "Controlled representation-family re-implementations on a common Big-Vul split; NOT the original Devign/ReVeal/LineVul systems. CodeBERT is frozen + linear probe, not fine-tuned. Use for relative positioning only.",
+  "reference_rows": [
+    {
+      "representation": "Ours srcML-aug-slice TF-IDF",
+      "f1": 0.397,
+      "pr_auc": 0.384,
+      "family": "ours (ref)"
+    },
+    {
+      "representation": "Ours srcML-aug-whole TF-IDF",
+      "f1": 0.411,
+      "pr_auc": 0.4,
+      "family": "ours (ref)"
+    },
+    {
+      "representation": "Ours aug-slice GNN",
+      "f1": 0.368,
+      "pr_auc": 0.341,
+      "family": "ours (ref)"
+    },
+    {
+      "representation": "whole-function-text TF-IDF",
+      "f1": 0.366,
+      "pr_auc": 0.35,
+      "family": "ref"
+    },
+    {
+      "representation": "plain slice-text TF-IDF",
+      "f1": 0.335,
+      "pr_auc": 0.327,
+      "family": "ref"
+    }
+  ],
+  "baselines": {
+    "TextCNN": {
+      "maxF1_thresh": {
+        "f1": 0.31112883333471547,
+        "pr_auc": 0.3856322482176769,
+        "precision": 0.43732817098486,
+        "recall": 0.246
+      },
+      "at_0.5": {
+        "f1": 0.4227146165300761,
+        "pr_auc": 0.3856322482176769,
+        "precision": 0.32815215563584865,
+        "recall": 0.6439999999999999
+      },
+      "n_folds": 5,
+      "family": "token-CNN (Russell/Draper) [re-impl]"
+    },
+    "BiGRU": {
+      "maxF1_thresh": {
+        "f1": 0.4284315990363597,
+        "pr_auc": 0.3928971231399583,
+        "precision": 0.3522481732827102,
+        "recall": 0.5519999999999999
+      },
+      "at_0.5": {
+        "f1": 0.41438532457134586,
+        "pr_auc": 0.3928971231399583,
+        "precision": 0.350349479336164,
+        "recall": 0.522
+      },
+      "n_folds": 5,
+      "family": "RNN token (VulDeePecker/SySeVR) [re-impl]"
+    },
+    "CodeBERT-frozen": {
+      "maxF1_thresh": {
+        "f1": 0.48788655317280155,
+        "pr_auc": 0.502158767918882,
+        "precision": 0.46096155825198676,
+        "recall": 0.526
+      },
+      "at_0.5": {
+        "f1": 0.5025323752591637,
+        "pr_auc": 0.502158767918882,
+        "precision": 0.3953916867309841,
+        "recall": 0.6900000000000001
+      },
+      "n_folds": 5,
+      "status": "ok",
+      "note": "frozen CodeBERT mean-pool + LogReg probe (NOT fine-tuned)",
+      "family": "pretrained transformer (LineVul) [re-impl, frozen probe]"
+    }
+  },
+  "dataset_counts": {
+    "n_total": 2500,
+    "n_positive": 500,
+    "n_negative": 2000,
+    "neg_ratio": 4,
+    "cap": 2500
+  },
+  "verdict": "VERDICT: among the SOTA-family baselines run here, srcML-aug-whole ranks #3 and srcML-aug-slice #4 of 8 available rows. the best ran deep baseline CodeBERT-frozen (F1=0.488) leads srcML-aug-whole (F1=0.411); our contribution is efficiency/interpretability, not topping F1 here."
+}

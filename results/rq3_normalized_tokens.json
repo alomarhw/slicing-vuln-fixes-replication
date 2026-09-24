@@ -1,0 +1,57 @@
+{
+  "protocol": "same as augmented_study RQ3 (30x5 repeated stratified CV, TF-IDF 1-2 grams, 2000 features, balanced LR, 0.5 threshold)",
+  "representations": {
+    "SLICE_TEXT_NORM": {
+      "f1": 0.4154113912640484,
+      "f1_std": 0.03221632537311895,
+      "pr_auc": 0.3723141135494612
+    },
+    "WHOLE_TEXT_NORM": {
+      "f1": 0.4193647189690713,
+      "f1_std": 0.02811243381514091,
+      "pr_auc": 0.37501019027058086
+    }
+  },
+  "tests": {
+    "AUG_SLICE_vs_SLICE_TEXT_NORM": {
+      "mean_diff": -0.00874117633152054,
+      "nb_p": 0.5692814534275358,
+      "pr_auc": {
+        "mean_diff": 0.018322222126951254,
+        "nb_p": 0.25676719780616286
+      },
+      "nb_p_holm": 1.0
+    },
+    "SLICE_TEXT_NORM_vs_SLICE_TEXT": {
+      "mean_diff": 0.06688774453737456,
+      "nb_p": 0.00030377520503964276,
+      "pr_auc": {
+        "mean_diff": 0.04536619574439637,
+        "nb_p": 0.030125680456877184
+      },
+      "nb_p_holm": 0.001215100820158571
+    },
+    "AUG_WHOLE_vs_WHOLE_TEXT_NORM": {
+      "mean_diff": -0.004616058714895467,
+      "nb_p": 0.7787733465253486,
+      "pr_auc": {
+        "mean_diff": 0.031239422885071033,
+        "nb_p": 0.0727733557638976
+      },
+      "nb_p_holm": 1.0
+    },
+    "WHOLE_TEXT_NORM_vs_WHOLE_TEXT": {
+      "mean_diff": 0.05274289140646007,
+      "nb_p": 0.003220077280779802,
+      "pr_auc": {
+        "mean_diff": 0.02383173263540189,
+        "nb_p": 0.2227821348529856
+      },
+      "nb_p_holm": 0.009660231842339407
+    }
+  },
+  "example": {
+    "raw": "  if (!FindCachesForOrigin(origin, &records))",
+    "normalized": "  if (!FUN1(VAR1, &VAR2))"
+  }
+}

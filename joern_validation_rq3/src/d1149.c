@@ -1,0 +1,20 @@
+void RenderThreadImpl::OnCreateNewView(const ViewMsg_New_Params& params) {
+  EnsureWebKitInitialized();
+  RenderViewImpl::Create(params.opener_route_id,
+                         params.window_was_created_with_opener,
+                         params.renderer_preferences,
+                         params.web_preferences,
+                         params.view_id,
+                         params.main_frame_routing_id,
+                         params.surface_id,
+                         params.session_storage_namespace_id,
+                         params.frame_name,
+                         false,
+                         params.swapped_out,
+                         params.proxy_routing_id,
+                         params.hidden,
+                         params.never_visible,
+                         params.next_page_id,
+                         params.screen_info,
+                         params.accessibility_mode);
+}

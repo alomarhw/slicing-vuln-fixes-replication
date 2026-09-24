@@ -1,0 +1,18 @@
+{
+  "n_pairs_considered": 400,
+  "n_used": 286,
+  "n_whole_function_parse_fallback": 8,
+  "n_sink_criterion_matched": 281,
+  "n_sink_criterion_fallback": 5,
+  "sink_criterion_fallback_rate_pct": 1.7482517482517483,
+  "matched": {
+    "n": 281,
+    "mean_coverage": 0.7842415569890313,
+    "mean_rsr": 0.563767368428422
+  },
+  "fallback": {
+    "n": 5,
+    "mean_coverage": 0.2333333333333333,
+    "mean_rsr": 0.18215174129353234
+  }
+}

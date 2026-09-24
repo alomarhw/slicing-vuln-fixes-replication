@@ -1,0 +1,38 @@
+{
+  "n_functions": 1377,
+  "n_positive": 270,
+  "representations": {
+    "PHI_JOERN_SLICE": {
+      "f1": 0.4202576278745774,
+      "f1_std": 0.03943831941927588,
+      "pr_auc": 0.38685921975376547
+    },
+    "PHI_OUR_SLICE": {
+      "f1": 0.4235180975628026,
+      "f1_std": 0.03559081161035346,
+      "pr_auc": 0.3994204608080102
+    },
+    "PHI_VARMENTION": {
+      "f1": 0.4165015653516802,
+      "f1_std": 0.04016899043063971,
+      "pr_auc": 0.40486722921987167
+    }
+  },
+  "tests": {
+    "PHI_JOERN_SLICE_vs_PHI_VARMENTION": {
+      "mean_diff": 0.003756062522897204,
+      "nb_p": 0.8089499183249127,
+      "nb_p_holm": 1.0
+    },
+    "PHI_JOERN_SLICE_vs_PHI_OUR_SLICE": {
+      "mean_diff": -0.0032604696882252964,
+      "nb_p": 0.8162915833113036,
+      "nb_p_holm": 1.0
+    },
+    "PHI_OUR_SLICE_vs_PHI_VARMENTION": {
+      "mean_diff": 0.0070165322111225,
+      "nb_p": 0.6488179095948476,
+      "nb_p_holm": 1.0
+    }
+  }
+}

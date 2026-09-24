@@ -1,0 +1,3 @@
+void PageInfoWindowGtk::ModelChanged() {
+  InitContents();
+}

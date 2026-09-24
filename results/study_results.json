@@ -1,0 +1,325 @@
+{
+  "_meta": {
+    "seed": 1337,
+    "data_path": "data/bigvul/sample.jsonl",
+    "have_proto_dualsig": true,
+    "have_ast_slicer": true,
+    "have_rp_style": true,
+    "have_numpy": true,
+    "have_sklearn": true,
+    "rows_loaded": 20000
+  },
+  "RQ1": {
+    "description": "Backward static slice from SINK criteria (no diff leakage). coverage = |region & del_lines| / |del_lines|; region_size_ratio = |region| / n_lines.",
+    "cap": 400,
+    "pairs_considered": 400,
+    "pairs_used": 294,
+    "skipped_empty_del": 106,
+    "skipped_parse": 0,
+    "slice": {
+      "mean_coverage": 0.7807433475530084,
+      "median_coverage": 1.0,
+      "mean_region_size_ratio": 0.5691475824314771,
+      "median_region_size_ratio": 0.5833333333333334,
+      "mean_region_size_lines": 47.414965986394556,
+      "mean_n_lines": 76.37074829931973,
+      "coverage_ci95": [
+        0.7402385539781521,
+        0.8208881479142867
+      ],
+      "region_size_ratio_ci95": [
+        0.5422035334021927,
+        0.5952344138018549
+      ]
+    },
+    "whole_function_baseline": {
+      "mean_coverage": 1.0,
+      "mean_region_size_ratio": 1.0
+    },
+    "headline": "Slice covers 78.1% of the true fix (deleted lines) while keeping only 56.9% of the function.",
+    "statistics_note": "95% CI via 2000-resample bootstrap over the 294 used CVE pairs (percentile method, seed=1337).",
+    "by_fix_size": {
+      "1 line": {
+        "n": 126,
+        "mean_coverage": 0.7777777777777778,
+        "mean_region_size_ratio": 0.5488266884797357,
+        "coverage_ci95": [
+          0.6984126984126984,
+          0.8492063492063492
+        ]
+      },
+      "2-5 lines": {
+        "n": 112,
+        "mean_coverage": 0.7898809523809524,
+        "mean_region_size_ratio": 0.555928776075662,
+        "coverage_ci95": [
+          0.728720238095238,
+          0.8455357142857143
+        ]
+      },
+      ">5 lines": {
+        "n": 56,
+        "mean_coverage": 0.7691406698913896,
+        "mean_region_size_ratio": 0.6413072065345251,
+        "coverage_ci95": [
+          0.6978957793877993,
+          0.83784344488351
+        ]
+      }
+    },
+    "by_function_length_quartile": {
+      "quartile_boundaries_lines": [
+        13,
+        32,
+        72
+      ],
+      "strata": {
+        "Q1 (shortest)": {
+          "n": 75,
+          "mean_coverage": 0.7537970177970178,
+          "mean_region_size_ratio": 0.48986224886224883,
+          "coverage_ci95": [
+            0.6807388167388168,
+            0.8293862433862434
+          ]
+        },
+        "Q2": {
+          "n": 75,
+          "mean_coverage": 0.8013550957804154,
+          "mean_region_size_ratio": 0.5939259266895578,
+          "coverage_ci95": [
+            0.7195498429769529,
+            0.8768623188405797
+          ]
+        },
+        "Q3": {
+          "n": 72,
+          "mean_coverage": 0.7537642222527492,
+          "mean_region_size_ratio": 0.5692247827336246,
+          "coverage_ci95": [
+            0.6645913885497219,
+            0.8374730100373483
+          ]
+        },
+        "Q4 (longest)": {
+          "n": 72,
+          "mean_coverage": 0.8143209952788757,
+          "mean_region_size_ratio": 0.6258484959951082,
+          "coverage_ci95": [
+            0.7227441077441078,
+            0.895846142585273
+          ]
+        }
+      }
+    }
+  },
+  "RQ2": {
+    "description": "Dual slice signature (proto_dualsig2 mechanism). vuln_sig = srcSlice structural features over vr_vars of func_before; patch_delta = features over added-line vars in func_after MINUS func_before features.",
+    "cap": 400,
+    "pairs_considered": 400,
+    "pairs_used": 316,
+    "skipped_srcslice": 84,
+    "test_A": {
+      "description": "Mechanism: %% of CVEs with non-empty patch_delta, and of those, %% where patched side scores higher on the delta than vulnerable.",
+      "pct_cves_with_nonempty_delta": 25.632911392405063,
+      "n_nonempty_delta": 81,
+      "pct_patched_scores_higher": 100.0,
+      "n_patched_scores_higher": 81
+    },
+    "test_B": {
+      "description": "Generalization: 70/30 split; query=whole-function feature set; Rule A flags if sim_vuln>=tau; Rule B flags if sim_vuln>=tau AND sim_patch<tau. Reports P/R/F1 and func_after FP per tau.",
+      "db_size": 221,
+      "test_size": 95,
+      "n_positives": 95,
+      "n_negatives": 95,
+      "rule_A_vuln_only": [
+        {
+          "tau": 0.3,
+          "P": 0.4782608695652174,
+          "R": 0.3473684210526316,
+          "F1": 0.40243902439024387,
+          "fp_after": 36,
+          "tp": 33,
+          "fn": 62,
+          "tn": 59
+        },
+        {
+          "tau": 0.4,
+          "P": 0.4897959183673469,
+          "R": 0.25263157894736843,
+          "F1": 0.3333333333333333,
+          "fp_after": 25,
+          "tp": 24,
+          "fn": 71,
+          "tn": 70
+        },
+        {
+          "tau": 0.5,
+          "P": 0.4897959183673469,
+          "R": 0.25263157894736843,
+          "F1": 0.3333333333333333,
+          "fp_after": 25,
+          "tp": 24,
+          "fn": 71,
+          "tn": 70
+        },
+        {
+          "tau": 0.6,
+          "P": 0.5,
+          "R": 0.10526315789473684,
+          "F1": 0.17391304347826086,
+          "fp_after": 10,
+          "tp": 10,
+          "fn": 85,
+          "tn": 85
+        },
+        {
+          "tau": 0.7,
+          "P": 0.5,
+          "R": 0.07368421052631578,
+          "F1": 0.12844036697247704,
+          "fp_after": 7,
+          "tp": 7,
+          "fn": 88,
+          "tn": 88
+        },
+        {
+          "tau": 0.8,
+          "P": 0.5,
+          "R": 0.05263157894736842,
+          "F1": 0.09523809523809525,
+          "fp_after": 5,
+          "tp": 5,
+          "fn": 90,
+          "tn": 90
+        }
+      ],
+      "rule_B_dual": [
+        {
+          "tau": 0.3,
+          "P": 0.4782608695652174,
+          "R": 0.3473684210526316,
+          "F1": 0.40243902439024387,
+          "fp_after": 36,
+          "tp": 33,
+          "fn": 62,
+          "tn": 59
+        },
+        {
+          "tau": 0.4,
+          "P": 0.4897959183673469,
+          "R": 0.25263157894736843,
+          "F1": 0.3333333333333333,
+          "fp_after": 25,
+          "tp": 24,
+          "fn": 71,
+          "tn": 70
+        },
+        {
+          "tau": 0.5,
+          "P": 0.4897959183673469,
+          "R": 0.25263157894736843,
+          "F1": 0.3333333333333333,
+          "fp_after": 25,
+          "tp": 24,
+          "fn": 71,
+          "tn": 70
+        },
+        {
+          "tau": 0.6,
+          "P": 0.5,
+          "R": 0.10526315789473684,
+          "F1": 0.17391304347826086,
+          "fp_after": 10,
+          "tp": 10,
+          "fn": 85,
+          "tn": 85
+        },
+        {
+          "tau": 0.7,
+          "P": 0.5,
+          "R": 0.07368421052631578,
+          "F1": 0.12844036697247704,
+          "fp_after": 7,
+          "tp": 7,
+          "fn": 88,
+          "tn": 88
+        },
+        {
+          "tau": 0.8,
+          "P": 0.5,
+          "R": 0.05263157894736842,
+          "F1": 0.09523809523809525,
+          "fp_after": 5,
+          "tp": 5,
+          "fn": 90,
+          "tn": 90
+        }
+      ],
+      "best_F1_dual_row": {
+        "tau": 0.3,
+        "P": 0.4782608695652174,
+        "R": 0.3473684210526316,
+        "F1": 0.40243902439024387,
+        "fp_after": 36,
+        "tp": 33,
+        "fn": 62,
+        "tn": 59
+      },
+      "rule_A_at_best_dual_tau": {
+        "tau": 0.3,
+        "P": 0.4782608695652174,
+        "R": 0.3473684210526316,
+        "F1": 0.40243902439024387,
+        "fp_after": 36,
+        "tp": 33,
+        "fn": 62,
+        "tn": 59
+      }
+    },
+    "note": "srcSlice requires srcml+srcslice binaries on PATH. If absent, srcslice_profiles returns None and all pairs are skipped \u2014 the JSON still records used=0 honestly.",
+    "headline": "Test A: ~26% of CVEs have a non-empty fix delta (mechanism fires); Test B: dual rule generalizes ~= vuln-only (best dual F1=0.40 vs vuln-only F1=0.40 at tau=0.3) \u2014 coarse srcSlice features do not transfer."
+  },
+  "RQ3": {
+    "description": "Detection: TF-IDF(max_features=2000, ngram (1,2)) + LogisticRegression(max_iter=500, class_weight='balanced'), StratifiedKFold(5). WHOLE function text vs SLICE text. Positives = all vul==1 func_before; negatives = sampled vul==0 at 1:4, total capped at 6000.",
+    "available": true,
+    "whole": {
+      "mean_f1": 0.40823414735037,
+      "mean_pr_auc": 0.3647243270655822,
+      "mean_precision": 0.3235375482490026,
+      "mean_recall": 0.554984126984127,
+      "fold_f1": [
+        0.43859649122807015,
+        0.43174603174603177,
+        0.37222222222222223,
+        0.4265129682997118,
+        0.37209302325581395
+      ]
+    },
+    "slice": {
+      "mean_f1": 0.392740088726861,
+      "mean_pr_auc": 0.3521768452077894,
+      "mean_precision": 0.31599626657574137,
+      "mean_recall": 0.5199238095238095,
+      "fold_f1": [
+        0.39766081871345027,
+        0.41025641025641024,
+        0.33043478260869563,
+        0.4107142857142857,
+        0.4146341463414634
+      ]
+    },
+    "dataset": {
+      "available_positives": 627,
+      "available_negatives": 19373,
+      "used_positives": 627,
+      "used_negatives": 2508,
+      "total": 3135,
+      "target_ratio_pos_to_neg": "1:4",
+      "actual_ratio_pos_to_neg": "1:4.00",
+      "slice_fallback_to_whole": 0,
+      "cap_total": 6000
+    },
+    "headline": "WHOLE wins on F1 (WHOLE F1=0.408 / PR-AUC=0.365 vs SLICE F1=0.393 / PR-AUC=0.352). As expected, slicing removes context useful for a bag-of-tokens detector."
+  }
+}

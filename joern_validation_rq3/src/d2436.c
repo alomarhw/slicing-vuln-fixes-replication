@@ -1,0 +1,4 @@
+TestController::~TestController()
+{
+    platformDestroy();
+}

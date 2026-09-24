@@ -1,0 +1,2 @@
+ChromeGeolocationPermissionContext::~ChromeGeolocationPermissionContext() {
+}

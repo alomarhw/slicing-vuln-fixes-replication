@@ -1,0 +1,76 @@
+{
+  "paperTitle": "Scope Is Not Content: Structural Augmentation of Program Slices for Vulnerability Fix Localization",
+  "datasets": [
+    "BigVul",
+    {
+      "name": "BigVul",
+      "source": "real",
+      "rows": 20000,
+      "version": "",
+      "license": "",
+      "citation": "Fan et al., \"A C/C++ Code Vulnerability Dataset with Code Changes and CVE Summaries\", MSR 2020",
+      "checksum": "",
+      "recordCount": 20000,
+      "schema": [
+        "CVE ID",
+        "CVE Page",
+        "CWE ID",
+        "codeLink",
+        "commit_id",
+        "commit_message",
+        "func_after",
+        "func_before",
+        "lang",
+        "project",
+        "vul"
+      ],
+      "path": "data/bigvul/sample.jsonl"
+    }
+  ],
+  "experiments": [
+    "RQ1 (fix localization: coverage, region-size ratio, 294 CVE pairs)",
+    "RQ2 (patch-signature discrimination: coarse vs. srcML-augmented, 294 CVE pairs)",
+    "RQ3 (detection: TF-IDF + logistic regression, 5-fold CV, 2500 functions, 1:4 imbalance)",
+    "RQ3 baselines (TextCNN, BiGRU, frozen CodeBERT, slice-graph GNN, fine-tuned CodeBERT, CodeBERT+AugWhole fusion)"
+  ],
+  "metrics": [
+    "coverage",
+    "region_size_ratio",
+    "discrimination_rate",
+    "dual_signature_f1",
+    "f1",
+    "pr_auc",
+    "precision",
+    "recall"
+  ],
+  "software": {
+    "python": "3.12",
+    "note": "Two environments -- see requirements.txt (main) and requirements-codebert.txt (CodeBERT/torch); ABI-incompatible, kept separate.",
+    "main_env": {
+      "datasets": "2.20.0",
+      "matplotlib": "3.10.9",
+      "numpy": "2.3.5",
+      "pandas": "3.0.3",
+      "requests": "2.32.3",
+      "scikit-learn": "1.9.0",
+      "scipy": "1.17.1",
+      "seaborn": "0.13.2"
+    },
+    "codebert_env": {
+      "numpy": "1.26.4",
+      "torch": "2.2.2",
+      "transformers": "4.46.2",
+      "scikit-learn": "1.5.1",
+      "scipy": "1.13.1",
+      "pandas": "2.2.2"
+    }
+  },
+  "expectedRuntime": "~1 hour (main-venv scripts: minutes; CodeBERT/torch scripts, especially the fine-tune, are the dominant cost)",
+  "reproducibilityFactors": {
+    "publicData": true,
+    "publicCode": true,
+    "environmentCaptured": true,
+    "seedsFixed": true,
+    "instructionsComplete": true
+  }
+}

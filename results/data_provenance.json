@@ -1,0 +1,43 @@
+{
+  "usedSynthetic": false,
+  "datasets": [
+    {
+      "name": "BigVul",
+      "source": "real",
+      "rows": 20000,
+      "version": "",
+      "license": "",
+      "citation": "",
+      "checksum": "",
+      "recordCount": 20000,
+      "schema": [
+        "func",
+        "label",
+        "code_after",
+        "lang",
+        "cwe",
+        "source_dataset"
+      ],
+      "path": "data/bigvul/sample.jsonl"
+    },
+    {
+      "name": "Juliet Test Suite",
+      "source": "real",
+      "rows": 2732,
+      "version": "",
+      "license": "",
+      "citation": "",
+      "checksum": "",
+      "recordCount": 2732,
+      "schema": [
+        "func",
+        "label",
+        "code_after",
+        "lang",
+        "cwe",
+        "source_dataset"
+      ],
+      "path": "data/juliet_test_suite/sample.jsonl"
+    }
+  ]
+}

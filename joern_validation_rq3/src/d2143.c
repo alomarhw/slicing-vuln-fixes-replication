@@ -1,0 +1,1 @@
+WindowTreeHostManager::~WindowTreeHostManager() {}

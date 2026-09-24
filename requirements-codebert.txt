@@ -1,0 +1,23 @@
+# Separate environment for the CodeBERT-frozen baseline and the fine-tuned
+# CodeBERT classifier (baselines_sota.py's run_codebert(), finetune_codebert.py).
+#
+# torch==2.2.2 requires numpy<2 (ABI incompatibility with numpy>=2 causes an
+# import-time crash), and transformers>=4.4x is the last line compatible with
+# torch 2.2.2 (transformers>=5 requires torch>=2.4). The rest of the pipeline
+# (TF-IDF/logistic-regression scripts in requirements.txt) uses numpy>=2 and
+# is NOT compatible with this environment -- keep the two isolated, e.g.:
+#
+#   python3 -m venv .venv_codebert
+#   source .venv_codebert/bin/activate
+#   pip install -r requirements-codebert.txt
+#   python3 baselines_sota.py       # or finetune_codebert.py
+#
+numpy==1.26.4
+torch==2.2.2
+transformers==4.46.2
+scikit-learn==1.5.1
+scipy==1.13.1
+pandas==2.2.2
+datasets==2.20.0
+huggingface_hub
+tokenizers

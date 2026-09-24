@@ -1,0 +1,269 @@
+{
+  "source": "bstee615/bigvul test split, all 33,050 rows",
+  "n_rows": 33050,
+  "composition_all_qualifying": {
+    "n_pairs": 1024,
+    "n_projects": 114,
+    "n_cves": 669,
+    "top_projects": [
+      [
+        "Chrome",
+        387,
+        37.8
+      ],
+      [
+        "linux",
+        174,
+        17.0
+      ],
+      [
+        "Android",
+        119,
+        11.6
+      ],
+      [
+        "ImageMagick",
+        42,
+        4.1
+      ],
+      [
+        "tcpdump",
+        27,
+        2.6
+      ],
+      [
+        "php-src",
+        19,
+        1.9
+      ],
+      [
+        "openssl",
+        16,
+        1.6
+      ],
+      [
+        "jasper",
+        14,
+        1.4
+      ]
+    ],
+    "top_cwes": [
+      [
+        "CWE-119",
+        197,
+        19.2
+      ],
+      [
+        "unlabeled",
+        191,
+        18.7
+      ],
+      [
+        "CWE-20",
+        112,
+        10.9
+      ],
+      [
+        "CWE-399",
+        78,
+        7.6
+      ],
+      [
+        "CWE-125",
+        68,
+        6.6
+      ],
+      [
+        "CWE-264",
+        60,
+        5.9
+      ],
+      [
+        "CWE-200",
+        49,
+        4.8
+      ],
+      [
+        "CWE-189",
+        30,
+        2.9
+      ],
+      [
+        "CWE-416",
+        29,
+        2.8
+      ],
+      [
+        "CWE-190",
+        28,
+        2.7
+      ]
+    ]
+  },
+  "composition_first_400": {
+    "n_pairs": 400,
+    "n_projects": 68,
+    "n_cves": 310,
+    "top_projects": [
+      [
+        "Chrome",
+        143,
+        35.8
+      ],
+      [
+        "linux",
+        66,
+        16.5
+      ],
+      [
+        "Android",
+        48,
+        12.0
+      ],
+      [
+        "ImageMagick",
+        19,
+        4.8
+      ],
+      [
+        "tcpdump",
+        13,
+        3.2
+      ],
+      [
+        "php-src",
+        11,
+        2.8
+      ],
+      [
+        "openssl",
+        7,
+        1.8
+      ],
+      [
+        "php",
+        6,
+        1.5
+      ]
+    ],
+    "top_cwes": [
+      [
+        "CWE-119",
+        74,
+        18.5
+      ],
+      [
+        "unlabeled",
+        72,
+        18.0
+      ],
+      [
+        "CWE-20",
+        50,
+        12.5
+      ],
+      [
+        "CWE-399",
+        29,
+        7.2
+      ],
+      [
+        "CWE-125",
+        28,
+        7.0
+      ],
+      [
+        "CWE-264",
+        24,
+        6.0
+      ],
+      [
+        "CWE-200",
+        19,
+        4.8
+      ],
+      [
+        "CWE-190",
+        12,
+        3.0
+      ],
+      [
+        "CWE-416",
+        12,
+        3.0
+      ],
+      [
+        "CWE-189",
+        10,
+        2.5
+      ]
+    ]
+  },
+  "rq1_all_qualifying": {
+    "n_deletion_pairs": 760,
+    "n_insertion_only_pairs": 461,
+    "mean_coverage": 0.8168524270170562,
+    "coverage_ci95": [
+      0.7929495003564833,
+      0.839662555787128
+    ],
+    "median_coverage": 1.0,
+    "mean_rsr": 0.5782134574895149,
+    "lift_vs_random_lines": 1.4145898077117767,
+    "baselines": {
+      "random_lines": {
+        "mean_coverage_deletion": 0.5774482627853701,
+        "mean_hitrate_insertion": 0.8219088937093275,
+        "wilcoxon_stat": 27951.0,
+        "wilcoxon_p": 5.1679602769040684e-76,
+        "cliffs_delta": 0.577174515235457,
+        "n_paired": 760
+      },
+      "random_window": {
+        "mean_coverage_deletion": 0.6327805661584506,
+        "mean_hitrate_insertion": 0.6626247288503254,
+        "wilcoxon_stat": 23446.0,
+        "wilcoxon_p": 1.9954172853239787e-56,
+        "cliffs_delta": 0.4233743074792244,
+        "n_paired": 760
+      },
+      "sink_window": {
+        "mean_coverage_deletion": 0.756846802299872,
+        "mean_hitrate_insertion": 0.8047722342733189,
+        "mean_rsr": 0.6662353701892028,
+        "wilcoxon_stat": 14094.5,
+        "wilcoxon_p": 3.750354087619466e-05,
+        "cliffs_delta": 0.08465027700831025,
+        "n_paired": 760
+      },
+      "variable_mention": {
+        "mean_coverage_deletion": 0.81704860902868,
+        "mean_hitrate_insertion": 0.8199566160520607,
+        "mean_rsr": 0.5663426630525641,
+        "wilcoxon_stat": 14447.0,
+        "wilcoxon_p": 0.8147977929942742,
+        "cliffs_delta": 0.010929709141274238,
+        "n_paired": 760
+      },
+      "tail": {
+        "mean_coverage_deletion": 0.5956031588599088,
+        "mean_hitrate_insertion": 0.6008676789587852,
+        "wilcoxon_stat": 4628.5,
+        "wilcoxon_p": 4.101397363464153e-36,
+        "cliffs_delta": 0.28945983379501383,
+        "n_paired": 760
+      }
+    },
+    "insertion_hit_slice": 0.7765726681127982
+  },
+  "rsr_distribution_all_qualifying": {
+    "quartiles": [
+      0.4444444444444444,
+      0.5862068965517241,
+      0.7434789440603393
+    ],
+    "pct_rsr_1": 3.8157894736842106,
+    "pct_rsr_ge_0_9": 6.315789473684211,
+    "pct_rsr_le_0_25": 9.868421052631579
+  }
+}

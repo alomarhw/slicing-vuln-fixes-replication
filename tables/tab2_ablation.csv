@@ -1,0 +1,9 @@
+Experiment,Dataset,Slice_Mode,f1,pr_auc,precision,recall,avg_slice_precision,localization_f1,localization_precision,fix_coverage,region_size_ratio,out_of_region_rate
+RQ1-E2 Detection Slicing Ablation,Devign,static,0.5495,0.5462,0.5375,0.5625,0.4326,,,,,
+RQ1-E2 Detection Slicing Ablation,Devign,dynamic,0.4526,0.5115,0.5202,0.4016,0.0647,,,,,
+RQ1-E2 Detection Slicing Ablation,Devign,hybrid,0.552,0.5493,0.535,0.5705,0.4604,,,,,
+RQ1-E2 Detection Slicing Ablation,Devign,none,0.5451,0.5364,0.527,0.5649,1.0,,,,,
+RQ2-E2 Localization Slicing Ablation,BigVul,static,,,,,,0.2833,0.2616,0.7719,0.5592,0.7384
+RQ2-E2 Localization Slicing Ablation,BigVul,dynamic,,,,,,0.0876,0.1526,0.103,0.1045,0.8474
+RQ2-E2 Localization Slicing Ablation,BigVul,hybrid,,,,,,0.2774,0.2353,0.8015,0.6172,0.7647
+RQ2-E2 Localization Slicing Ablation,BigVul,none,,,,,,0.2587,0.189,1.0,1.0,0.811

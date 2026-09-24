@@ -1,0 +1,1 @@
+ContentSecurityPolicy::~ContentSecurityPolicy() {}

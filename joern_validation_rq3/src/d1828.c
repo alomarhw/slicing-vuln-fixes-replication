@@ -1,0 +1,3 @@
+SerializerMarkupAccumulator::~SerializerMarkupAccumulator()
+ {
+ }

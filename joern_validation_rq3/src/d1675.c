@@ -1,0 +1,2 @@
+PluginInfoBarDelegate::~PluginInfoBarDelegate() {
+}

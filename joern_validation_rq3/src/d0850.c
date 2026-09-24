@@ -1,0 +1,2 @@
+void Shell::PlatformCleanUp() {
+}
