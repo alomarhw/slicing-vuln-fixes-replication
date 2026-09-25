@@ -18,7 +18,6 @@ torch==2.2.2, which are mutually incompatible in one venv. Set up both once:
 Steps (5-fold CV on BigVul; seeds 42/1337 as set per-script):
   1. fetch_data.py            [main venv]     -> data/bigvul/sample.jsonl (real HF fetch)
   2. consolidated_study.py    [main venv]     -> results/study_results.json (RQ1)
-                                                  figures/fig_localization.png
   3. augmented_study.py       [main venv]     -> results/augmented_results.json
                                                   (RQ2 signature discrimination; RQ3 core
                                                   4-representation detection; real per-fold
@@ -56,8 +55,6 @@ Steps (5-fold CV on BigVul; seeds 42/1337 as set per-script):
   7. fusion_study.py          [codebert venv] -> results/fusion_results.json (fusion ablation)
   8. finetune_codebert.py     [codebert venv] -> results/finetuned_codebert_results.json
                                                   (fine-tuned, not frozen, CodeBERT baseline)
-  9. make_figures.py          [main venv]     -> figures/fig_signature_aug.png,
-                                                  fig_detection_aug.png, fig_baselines.png
  10. make_fig1.py             [main venv]     -> figures/method_diagram.{svg,pdf,png} (pipeline
                                                   figure; PDF/PNG need cairosvg + the cairo library)
  11. example_trace.py         [main venv]     -> results/example_trace.json (motivating example:
@@ -129,7 +126,6 @@ STEPS = [
     ("RQ3: CodeBERT+AugWhole fusion ablation (fusion_study.py)", [CODEBERT_PY, "fusion_study.py"]),
     ("RQ3: fine-tuned CodeBERT baseline (finetune_codebert.py)",
      [CODEBERT_PY, "finetune_codebert.py"]),
-    ("Figures: RQ2/RQ3 charts (make_figures.py)", [MAIN_PY, "make_figures.py"]),
     ("Figure: pipeline diagram (make_fig1.py)", [MAIN_PY, "make_fig1.py"]),
     ("Motivating example trace: sinks, worklist, slice, phi delta (example_trace.py)",
      [MAIN_PY, "example_trace.py"]),
@@ -151,7 +147,7 @@ def main() -> int:
             print(f"\n[run_all] FAILED at: {label} (exit {result.returncode})", file=sys.stderr)
             print("[run_all] Stopping -- later steps depend on this one's output.", file=sys.stderr)
             return result.returncode
-    print("\n==> Done. Results are in results/*.json, figures are in figures/*.png.")
+    print("\n==> Done. Results are in results/*.json, figures are in figures/.")
     print("    These are the exact files cited in the paper's tables and figures.")
     return 0
 

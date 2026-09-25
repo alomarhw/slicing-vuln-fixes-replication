@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Publication-quality redesign of Fig. 1 for
-'Scope Is Not Content: Structural Augmentation of Program Slices
- for Vulnerability Fix Localization'.
+'Scope Is Not Content: An Empirical Study of Program Slicing on Real
+ Vulnerability Fixes'.
 
 Visual grammar follows the SRCVUL-style architecture figure: shaded process
 lanes with italic captions, small-caps stage boxes, pastel fills keyed by

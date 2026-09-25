@@ -771,129 +771,6 @@ def run_rq3(rows):
 
 
 # --------------------------------------------------------------------------- #
-# Figures (best-effort; each guarded)
-# --------------------------------------------------------------------------- #
-def _figures(results):
-    if not _HAVE_STYLE:
-        print("[figures] rp_style/matplotlib unavailable — skipping figures.")
-        return
-    import matplotlib
-    matplotlib.use("Agg")
-    import matplotlib.pyplot as plt
-
-    pal = getattr(rp_style, "PALETTE",
-                  ["#0072B2", "#E69F00", "#009E73", "#D55E00"])
-
-    # --- fig_localization.png (RQ1) ---
-    try:
-        rq1 = results.get("RQ1", {})
-        s = rq1.get("slice", {}) or {}
-        cov = s.get("mean_coverage")
-        rsr = s.get("mean_region_size_ratio")
-        if cov is None or rsr is None:
-            raise ValueError("RQ1 has no usable means")
-        fig, ax = plt.subplots(figsize=(7, 4.5))
-        labels = ["Slice\ncoverage", "Slice\nregion-size ratio",
-                  "Whole-function\n(baseline)"]
-        vals = [cov, rsr, 1.0]
-        colors = [pal[0], pal[1], pal[3 % len(pal)]]
-        bars = ax.bar(labels, vals, color=colors)
-        ax.set_ylim(0, 1.05)
-        ax.set_ylabel("Fraction")
-        for b, v in zip(bars, vals):
-            ax.text(b.get_x() + b.get_width() / 2, v + 0.02,
-                    "%.2f" % v, ha="center", va="bottom", fontsize=9)
-        ax.set_title("RQ1: Fix localization (slice covers the fix in a "
-                     "fraction of the code)")
-        rp_style.save(os.path.join(FIGURES_DIR, "fig_localization.png"), fig)
-    except Exception as exc:
-        print("[figures] fig_localization failed: %r" % exc)
-        try:
-            plt.close("all")
-        except Exception:
-            pass
-
-    # --- fig_detection.png (RQ3) ---
-    try:
-        rq3 = results.get("RQ3", {})
-        w = rq3.get("whole") or {}
-        sl = rq3.get("slice") or {}
-        if "mean_f1" not in w or "mean_f1" not in sl:
-            raise ValueError("RQ3 has no usable metrics")
-        groups = ["F1", "PR-AUC"]
-        whole_vals = [w["mean_f1"], w["mean_pr_auc"]]
-        slice_vals = [sl["mean_f1"], sl["mean_pr_auc"]]
-        x = np.arange(len(groups)) if _HAVE_NUMPY else [0, 1]
-        width = 0.36
-        fig, ax = plt.subplots(figsize=(7, 4.5))
-        ax.bar([xi - width / 2 for xi in x], whole_vals, width,
-               label="WHOLE", color=pal[0])
-        ax.bar([xi + width / 2 for xi in x], slice_vals, width,
-               label="SLICE", color=pal[2 % len(pal)])
-        ax.set_xticks(list(x))
-        ax.set_xticklabels(groups)
-        ax.set_ylim(0, 1.05)
-        ax.set_ylabel("Score")
-        ax.legend()
-        ax.set_title("RQ3: Detection — WHOLE vs SLICE")
-        rp_style.save(os.path.join(FIGURES_DIR, "fig_detection.png"), fig)
-    except Exception as exc:
-        print("[figures] fig_detection failed: %r" % exc)
-        try:
-            plt.close("all")
-        except Exception:
-            pass
-
-    # --- fig_signature.png (RQ2) ---
-    try:
-        rq2 = results.get("RQ2", {})
-        ta = rq2.get("test_A") or {}
-        tb = rq2.get("test_B") or {}
-        pct_distinguishable = ta.get("pct_cves_with_nonempty_delta")
-        # Rule A vs Rule B func_after FP at best dual tau.
-        b_row = tb.get("best_F1_dual_row") or {}
-        a_row = tb.get("rule_A_at_best_dual_tau") or {}
-        fp_a = a_row.get("fp_after")
-        fp_b = b_row.get("fp_after")
-        if pct_distinguishable is None and (fp_a is None or fp_b is None):
-            raise ValueError("RQ2 has no usable metrics")
-
-        fig, axes = plt.subplots(1, 2, figsize=(9.5, 4.3))
-        # Left: % distinguishable by fix-signature (Test A).
-        ax0 = axes[0]
-        if pct_distinguishable is not None:
-            ax0.bar(["non-empty\nfix delta"], [pct_distinguishable],
-                    color=pal[0])
-            ax0.set_ylim(0, 100)
-            ax0.set_ylabel("% of CVEs")
-            ax0.text(0, pct_distinguishable + 1.5,
-                     "%.1f%%" % pct_distinguishable, ha="center",
-                     va="bottom", fontsize=9)
-        ax0.set_title("RQ2 Test A: distinguishable\nby fix-signature")
-        # Right: func_after FP, Rule A vs Rule B at best tau.
-        ax1 = axes[1]
-        if fp_a is not None and fp_b is not None:
-            bars = ax1.bar(["Rule A\n(vuln-only)", "Rule B\n(dual)"],
-                           [fp_a, fp_b], color=[pal[1], pal[2 % len(pal)]])
-            ax1.set_ylabel("func_after false positives")
-            for b, v in zip(bars, [fp_a, fp_b]):
-                ax1.text(b.get_x() + b.get_width() / 2, v,
-                         str(int(v)), ha="center", va="bottom", fontsize=9)
-            tau = b_row.get("tau")
-            ax1.set_title("RQ2 Test B: func_after FP\n(best dual tau=%s)" %
-                          ("%.1f" % tau if tau is not None else "?"))
-        else:
-            ax1.set_title("RQ2 Test B: unavailable")
-        rp_style.save(os.path.join(FIGURES_DIR, "fig_signature.png"), fig)
-    except Exception as exc:
-        print("[figures] fig_signature failed: %r" % exc)
-        try:
-            plt.close("all")
-        except Exception:
-            pass
-
-
-# --------------------------------------------------------------------------- #
 # Summary printing
 # --------------------------------------------------------------------------- #
 def _print_summary(results):
@@ -1016,10 +893,7 @@ def main():
     except Exception as exc:
         print("WARNING: could not write results json: %r" % exc)
 
-    try:
-        _figures(results)
-    except Exception as exc:
-        print("[figures] top-level failure: %r" % exc)
+    # The paper's figures are drawn by make_rq1_figures.py and make_fig1.py.
 
     try:
         _print_summary(results)

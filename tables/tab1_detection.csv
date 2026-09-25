@@ -1,4 +1,0 @@
-Method,Dataset,F1,PR_AUC,Precision,Recall,Wilcoxon_p,Effect_Size_(Cohens_d),CI_95_low,CI_95_high
-SG-VDR (Slicing+ML),BigVul,0.119,0.0954,0.0695,0.4164,0.0625,-2.5119,-0.021,-0.0112
-ML-only,BigVul,0.1354,0.1042,0.0794,0.461,,,,
-Detect-only (SySeVR+VulDeeLoc),BigVul,0.0881,0.0962,0.1374,0.1994,,,,
