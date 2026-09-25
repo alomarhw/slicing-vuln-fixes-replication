@@ -112,7 +112,7 @@ def region_map():
         ("Forward from inputs", d["forward"]["mean_rsr"], d["forward"]["mean_coverage"], ORANGE, "^", 0.014, 0.0, "left", False),
         ("Chop (forward \u2229 backward)", d["chop"]["mean_rsr"], d["chop"]["mean_coverage"], ORANGE, "^", 0.012, -0.05, "left", False),
     ]
-    fig, axes = plt.subplots(1, 2, figsize=(7.1, 2.3), sharey=True)
+    fig, axes = plt.subplots(1, 2, figsize=(7.1, 2.15), sharey=True)
     for ax, pts, title in ((axes[0], a_pts, f"(a) Which sinks, which region? All {full['n_deletion_pairs']} pairs"),
                            (axes[1], b_pts, f"(b) Which direction? {d['n_with_forward']} pairs with a forward slice")):
         iso_lift(ax)
@@ -123,7 +123,7 @@ def region_map():
         ax.set_ylim(0.3, 1.0)
         ax.set_xlabel("Region size (share of function kept, RSR)")
         ax.set_title(title, loc="left")
-    axes[0].set_ylabel("Deleted fix lines covered (share)")
+    axes[0].set_ylabel("Fix lines covered (share)")
     axes[1].tick_params(labelleft=True)
     handles = [plt.Line2D([], [], marker="o", color=BLUE, ls="", markersize=6.5, markeredgecolor="white"),
                plt.Line2D([], [], marker="^", color=ORANGE, ls="", markersize=6.5, markeredgecolor="white"),
@@ -193,7 +193,7 @@ def effort():
         rows = first_positions(pairs)
         populations.append((f"(b) CVE fixes committed since 2020, {len(rows)} pairs", rows))
     ks = list(range(0, 31))
-    fig, axes = plt.subplots(1, len(populations), figsize=(7.1, 2.15), sharey=True, squeeze=False)
+    fig, axes = plt.subplots(1, len(populations), figsize=(7.1, 2.0), sharey=True, squeeze=False)
     data = {}
     for ax, (title, rows) in zip(axes[0], populations):
         # Line style and marker differ per order, so the curves stay distinct in greyscale print.
