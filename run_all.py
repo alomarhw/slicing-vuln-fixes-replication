@@ -113,6 +113,8 @@ STEPS = [
      [MAIN_PY, "rq3_grouped_cv.py", "project"]),
     ("RQ3: SySeVR-style normalized-token conditions (rq3_normalized_tokens.py)",
      [MAIN_PY, "rq3_normalized_tokens.py"]),
+    ("RQ1: fix lines by dependence depth, slice vs variable mention (rq1_dependence_depth.py)",
+     [MAIN_PY, "rq1_dependence_depth.py"]),
     ("RQ1: sink density vs slice/variable-mention agreement (rq1_sink_density.py)",
      [MAIN_PY, "rq1_sink_density.py"]),
     ("Figures: RQ1 region map and inspection effort (make_rq1_figures.py)",

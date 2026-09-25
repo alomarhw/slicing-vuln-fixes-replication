@@ -1,0 +1,195 @@
+{
+  "strata_definition": "minimum worklist hops from a sink statement; fixed before analysis: 0, 1, 2, >=3, outside",
+  "main_sample": {
+    "n_pairs": 294,
+    "n_fallback_whole_function": 8,
+    "n_replay_mismatch": 0,
+    "n_deleted_lines": 1517,
+    "n_deleted_lines_in_slice": 1087,
+    "strata": {
+      "0": {
+        "n_lines": 973,
+        "share_of_all_deleted_lines": 0.6413974950560316,
+        "share_of_covered_lines": 0.8951241950321988,
+        "n_pairs": 240,
+        "slice_coverage": 1.0,
+        "vm_coverage": 0.9576042909016262,
+        "vm_line_capture": 0.9260020554984584,
+        "wilcoxon_p": 1.705141514598868e-06,
+        "cliffs_delta": 0.125
+      },
+      "1": {
+        "n_lines": 109,
+        "share_of_all_deleted_lines": 0.07185234014502308,
+        "share_of_covered_lines": 0.10027598896044158,
+        "n_pairs": 56,
+        "slice_coverage": 1.0,
+        "vm_coverage": 0.8223001700680272,
+        "vm_line_capture": 0.7798165137614679,
+        "wilcoxon_p": 0.0008286783627653281,
+        "cliffs_delta": 0.25
+      },
+      "2": {
+        "n_lines": 5,
+        "share_of_all_deleted_lines": 0.0032959789057350032,
+        "share_of_covered_lines": 0.004599816007359705,
+        "n_pairs": 4,
+        "slice_coverage": 1.0,
+        "vm_coverage": 0.5,
+        "vm_line_capture": 0.4,
+        "wilcoxon_p": 0.5,
+        "cliffs_delta": 0.5
+      },
+      ">=3": {
+        "n_lines": 0,
+        "share_of_all_deleted_lines": 0.0,
+        "share_of_covered_lines": 0.0,
+        "n_pairs": 0,
+        "slice_coverage": null,
+        "vm_coverage": null,
+        "vm_line_capture": null,
+        "wilcoxon_p": null,
+        "cliffs_delta": null
+      },
+      "outside": {
+        "n_lines": 430,
+        "share_of_all_deleted_lines": 0.2834541858932103,
+        "share_of_covered_lines": null,
+        "n_pairs": 106,
+        "slice_coverage": 0.0,
+        "vm_coverage": 0.4967563097280079,
+        "vm_line_capture": 0.3023255813953488,
+        "wilcoxon_p": 1.2540082107834002e-13,
+        "cliffs_delta": -0.660377358490566
+      }
+    }
+  },
+  "full_population": {
+    "n_pairs": 760,
+    "n_fallback_whole_function": 29,
+    "n_replay_mismatch": 0,
+    "n_deleted_lines": 3846,
+    "n_deleted_lines_in_slice": 2730,
+    "strata": {
+      "0": {
+        "n_lines": 2410,
+        "share_of_all_deleted_lines": 0.6266250650026001,
+        "share_of_covered_lines": 0.8827838827838828,
+        "n_pairs": 631,
+        "slice_coverage": 1.0,
+        "vm_coverage": 0.9575625178295154,
+        "vm_line_capture": 0.9095435684647303,
+        "wilcoxon_p": 2.3580407923727928e-14,
+        "cliffs_delta": 0.12202852614896989
+      },
+      "1": {
+        "n_lines": 300,
+        "share_of_all_deleted_lines": 0.078003120124805,
+        "share_of_covered_lines": 0.10989010989010989,
+        "n_pairs": 136,
+        "slice_coverage": 1.0,
+        "vm_coverage": 0.8459646358543417,
+        "vm_line_capture": 0.8566666666666667,
+        "wilcoxon_p": 1.2009142288797536e-06,
+        "cliffs_delta": 0.22058823529411764
+      },
+      "2": {
+        "n_lines": 19,
+        "share_of_all_deleted_lines": 0.004940197607904316,
+        "share_of_covered_lines": 0.00695970695970696,
+        "n_pairs": 15,
+        "slice_coverage": 1.0,
+        "vm_coverage": 0.7333333333333333,
+        "vm_line_capture": 0.7368421052631579,
+        "wilcoxon_p": 0.04550026389635839,
+        "cliffs_delta": 0.26666666666666666
+      },
+      ">=3": {
+        "n_lines": 1,
+        "share_of_all_deleted_lines": 0.00026001040041601667,
+        "share_of_covered_lines": 0.0003663003663003663,
+        "n_pairs": 1,
+        "slice_coverage": 1.0,
+        "vm_coverage": 1.0,
+        "vm_line_capture": 1.0,
+        "wilcoxon_p": null,
+        "cliffs_delta": 0.0
+      },
+      "outside": {
+        "n_lines": 1116,
+        "share_of_all_deleted_lines": 0.29017160686427457,
+        "share_of_covered_lines": null,
+        "n_pairs": 244,
+        "slice_coverage": 0.0,
+        "vm_coverage": 0.41787452602602115,
+        "vm_line_capture": 0.2903225806451613,
+        "wilcoxon_p": 1.8789258385443743e-25,
+        "cliffs_delta": -0.5737704918032787
+      }
+    }
+  },
+  "recent_cves": {
+    "n_pairs": 369,
+    "n_fallback_whole_function": 0,
+    "n_replay_mismatch": 0,
+    "n_deleted_lines": 2362,
+    "n_deleted_lines_in_slice": 1904,
+    "strata": {
+      "0": {
+        "n_lines": 1741,
+        "share_of_all_deleted_lines": 0.7370872142252328,
+        "share_of_covered_lines": 0.914390756302521,
+        "n_pairs": 340,
+        "slice_coverage": 1.0,
+        "vm_coverage": 0.960471419118537,
+        "vm_line_capture": 0.8845491097070649,
+        "wilcoxon_p": 7.461610793980707e-09,
+        "cliffs_delta": 0.12941176470588237
+      },
+      "1": {
+        "n_lines": 157,
+        "share_of_all_deleted_lines": 0.06646909398814564,
+        "share_of_covered_lines": 0.08245798319327731,
+        "n_pairs": 69,
+        "slice_coverage": 1.0,
+        "vm_coverage": 0.9103864734299516,
+        "vm_line_capture": 0.9171974522292994,
+        "wilcoxon_p": 0.006655605482949389,
+        "cliffs_delta": 0.13043478260869565
+      },
+      "2": {
+        "n_lines": 5,
+        "share_of_all_deleted_lines": 0.0021168501270110076,
+        "share_of_covered_lines": 0.0026260504201680674,
+        "n_pairs": 4,
+        "slice_coverage": 1.0,
+        "vm_coverage": 1.0,
+        "vm_line_capture": 1.0,
+        "wilcoxon_p": null,
+        "cliffs_delta": 0.0
+      },
+      ">=3": {
+        "n_lines": 1,
+        "share_of_all_deleted_lines": 0.0004233700254022015,
+        "share_of_covered_lines": 0.0005252100840336134,
+        "n_pairs": 1,
+        "slice_coverage": 1.0,
+        "vm_coverage": 0.0,
+        "vm_line_capture": 0.0,
+        "wilcoxon_p": null,
+        "cliffs_delta": 1.0
+      },
+      "outside": {
+        "n_lines": 458,
+        "share_of_all_deleted_lines": 0.1939034716342083,
+        "share_of_covered_lines": null,
+        "n_pairs": 88,
+        "slice_coverage": 0.0,
+        "vm_coverage": 0.489617535654121,
+        "vm_line_capture": 0.4126637554585153,
+        "wilcoxon_p": 9.460870601998556e-12,
+        "cliffs_delta": -0.6704545454545454
+      }
+    }
+  }
+}
